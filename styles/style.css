@@ -1,0 +1,9 @@
+html {
+    font-family: 'Roboto Slab', serif;
+}
+
+canvas {
+    display: inline;
+    background: #000000;
+    border: 1px solid #ffffff;
+}
