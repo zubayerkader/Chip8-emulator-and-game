@@ -16,5 +16,14 @@
         <canvas id="RomCode" width="320" height="160">Get a better browser that supports HTML5</canvas><canvas id="Memory" width="320" height="160">Get a better browser that supports HTML5</canvas>
 
         <script src = "scripts/chip8.js"></script>
+        <script>
+            var chip8 = new Chip8();
+            var Memcanvas = document.getElementById("Memory");
+            var reg1 = Memcanvas.getContext("2d");
+            reg1.font = "14px Arial";
+            reg1.fillStyle = "white";
+            reg1.fillText("V0 = " + chip8.getV(0).toString(),0,14);
+
+        </script>
     </body>
 </html>
