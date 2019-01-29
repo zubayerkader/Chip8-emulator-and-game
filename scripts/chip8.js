@@ -13,23 +13,58 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 
     // registers named from 0 to 15.
     // The last register is the carry flag
-    this.V = new Uint8Array(arraybuffer);
-    this.stack = new Uint8Array(arraybuffer);
-    this.ip = null;
-    this.sp = null;
+    this.V = new Uint8Array(arraybuffer); 
+    this.stack = new Uint8Array(arraybuffer);// For insturctions
+    this.ip = null; //Instruction Pointer
+    this.sp = null; //Stack Pointer
     this.delaytimer = null;
     this.soundtimer = null;
-
     this.display = new Array(64*32);
 
 }
 
-Chip8.prototype.setIP = function (memLocation) { // Example of a method
+Chip8.prototype.setIP = function(memLocation) { // set Instruction pointer
     this.ip = memLocation;
 }
+Chip8.prototype.getIP = function() { 
+    return this.ip;
+}
 
-Chip8.prototype.getV = function (num) {
+
+Chip8.prototype.setSP = function(stackLocation) { // set Stack Pointer
+    this.sp = stackLocation;
+}
+Chip8.prototype.getSP = function() {
+    return this.sp;
+}
+
+
+Chip8.prototype.setV = function(rnum,vnum){ // Set specific register
+    this.V[rnum]=vnum;
+}
+Chip8.prototype.getV = function(num) {
     return this.V[num];
+}
+
+
+Chip8.prototype.setDelay = function() { //later to be moved to reset()
+    this.delaytimer = 0;
+}
+Chip8.prototype.getDelay = function() {
+    return this.delaytimer;
+}
+
+
+Chip8.prototype.setSound = function() { //later to be moved to reset()
+    this.soundtimer = 0;
+}
+Chip8.prototype.getSound = function() {
+    return this.soundtimer;
+}
+
+
+Chip8.prototype.reset = function() {
+//tba
 }
 
 
