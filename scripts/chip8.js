@@ -17,6 +17,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.stack = new Uint8Array(arraybuffer);// For insturctions
     this.ip = null; //Instruction Pointer
     this.sp = null; //Stack Pointer
+    this.pc = 0x200; //program counter starts at 0x200
     this.delaytimer = null;
     this.soundtimer = null;
     this.display = new Array(64*32);
@@ -63,7 +64,28 @@ Chip8.prototype.getSound = function() {
 }
 
 
+Chip8.prototype.setDisplay = function() { //set display to black
+    for (var i = 0; i < 64*32; i++) {
+    	this.display[i]=0;
+    }
+}
+
+
 Chip8.prototype.reset = function() {
+	this.delaytimer = 0; //set delay timer to 0
+	this.soundtimer = 0; //set soundtimer to 0
+	this.sp = 0; //stack pointer set to 0
+	this.ip = 0; //instruction pointer set to 0
+	this.pc = 0x200;
+    for (var i = 0; i < 64*32; i++) {// set display to black
+    	this.display[i]=0;
+    }
+    for (var i = 0; i < 16; i++) {//set all registers to 0
+    	this.V[i]=0;
+    }
+    for (var i = 0; i < 4096; i++) {//set all mem to 0
+    	this.memory[i] = 0;
+    }
 //tba
 }
 
