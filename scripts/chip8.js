@@ -86,7 +86,118 @@ Chip8.prototype.reset = function() {
     for (var i = 0; i < 4096; i++) {//set all mem to 0
     	this.memory[i] = 0;
     }
+
 //tba
 }
 
+function emulateCycle () {
+	//opcode read in 
+	//var x =
+	//var y =
+	//var opno = command number
+	//var opend = command number distinction
+	//var opconl3 = eg.1kkk 
+	//var opconl2 =  eg 3xkk
+	this.pc = this.pc + 2;
+	if (opno == 0x0000){
+		if(opend == 0x0){
+			for (var i = 0; i<64*32; i++){
+				this.display[i]=0;
+				break;
+			}
+		}
+		if(opend == 0xE){
+			this.sp = this.sp-1;
+			this.pc = this.stack[this.sp]
+			break;
+		}
+	}
+	if (opno == 0x1000){
+		this.pc == opconl3;
+		break;
+	}
+	if (opno == 0x2000) {
+		this.stack[this.sp] = this.pc;
+		this.sp = this.sp+1;
+		this.pc = opconl3;
+		break;
+	}
+	if (opno == 0x3000){
+		if(this.v[x] == opconl2){
+			this.pc = this.pc + 2;
+		}
+		break;
+	}
+	if (opno == 0x4000){
+		if(this.v[x] != opconl2){
+			this.pc = this.pc + 2;
+		}
+		break;
+	}
+	if (opno == 0x5000){
+		if(this.v[x] == this.v[y]){
+			this.pc = this.pc + 2;
+		}
+	}
+	if (opno == 0x6000){
+		this.v[x] = opconl2;
+	}
+	if (opno == 0x7000){
+		this.v[x] = this.v[x] + opconl2;
+		//might have conditions tied to it (such as if size exceeds emulator parameters)
+	}
+	if (opno == 0x8000){
+		if (opend == 0x0000) {
+			this.v[x] = this.v[y];
+			break;
+		}
+		if (opend == 0x0001) {
+			this.v[x] = this.v[x] | this.v[y];
+			break;
+		}
+		if (opend == 0x0002) {
+			this.v[x] = this.v[x] & this.v[y];
+			break;
+		}
+		if (opend == 0x0003) {
+			this.v[x] = this.v[x] ^ this.v[y];
+			break;
 
+		}
+		if (opend == 0x0004) {
+			this.v[x] = this.v[x] + this.v[y];
+			if(this.v[x]>255){
+				this.v[0xF]= 1;
+			}
+			break;
+
+		}
+		if (opend == 0x0005) {
+			if(this.v[x]>this.v[y]){
+				this.v[0xF] = 0x1;
+			}
+			this.v[x] = this.v[x] - this.v[y];
+		}
+		if (opend == 0x0006) {
+			if (this.[x] & 0x1) {
+				this.v[0xF] = 0x1;
+			}
+			this.v[x] = this.v[x] >> 1;
+			break;
+		}
+		if (opend == 0x0007) {
+			this.v[x] = this.v[y] - this.v[x];
+			if (this.v[y] > this.v[x]) {
+				this.v[0xF] = 0x1;
+			} 
+		}
+		if (opend == 0x000E) {
+			if (this.[x] & 0x8) {
+				this.v[0xF] = 0x1;
+			}
+			this.v[x] = this.v[x] << 1;
+		} 
+		
+
+	}
+}
