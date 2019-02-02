@@ -189,15 +189,78 @@ function emulateCycle () {
 			this.v[x] = this.v[y] - this.v[x];
 			if (this.v[y] > this.v[x]) {
 				this.v[0xF] = 0x1;
-			} 
+			}
+			break; 
 		}
 		if (opend == 0x000E) {
 			if (this.[x] & 0x8) {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] << 1;
+			break;
 		} 
-		
-
 	}
+	if (opno == 0x9000) {
+		if (this.v[x] != this.v[y]) {
+			this.pc = this.pc + 2;
+		}
+		break;
+	}
+	if (opno == 0xA000) {
+		this.ip = opconl3;
+		break;
+	}
+	if (opno == 0xB000) {
+		this.pc = this.v[0x0] + opconl3;
+		break;
+	}
+	if (opno == 0xC000) {
+		this.v[x] = (Math.random()*0xFF) & opconl2;
+		break;
+	}
+	if (opno == 0xD000) {
+		//PLEASE MAYDAY HELP I HAVE NO CLUE HOW TO DO THIS ONE
+	}
+	// opno == 0xE000 need to be made after input codes is written
+	if (opno == 0xF000) {
+		if(opconl2 == 0x0007){
+			this.v[x] = this.delaytimer;
+			break;
+		}
+		if(opconl2 == 0x000A){
+			//need to be made after input codes are written
+			break;
+		}
+		if (opconl2 == 0x0015) {
+			this.delaytimer = this.v[x];
+			break;
+		}
+		if (opconl2 == 0x0018) {
+			this.soundtimer = this.v[x];
+			break;
+		}
+		if (opconl2 == 0x001E) {
+			this.ip = this.ip + this.v[x];
+			break;
+		}
+		if (opconl2 == 0x0029) {
+			// need to be made after sprite is constructed
+			break;
+		}
+		if (opconl2 == 0x0055) {
+			for (var i = 0; i<= x; i++){
+				this.memory[this.i + i] = this.v[i];
+			}
+			break;
+		}
+		if (opconl2 == 0x0065) {
+			for (var i = 0; i<=x; i++){
+			this.memory[this.i + i] = this.v[i];
+			}		
+		}
+	}
+
+	break;
+	//insert error code if opcode is not recognized
+	
 }
