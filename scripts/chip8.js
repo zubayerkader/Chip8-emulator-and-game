@@ -179,7 +179,7 @@ function emulateCycle () {
 			this.v[x] = this.v[x] - this.v[y];
 		}
 		if (opend == 0x0006) {
-			if (this.[x] & 0x1) {
+			if (this.v[x] & 0x1) {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] >> 1;
@@ -193,7 +193,7 @@ function emulateCycle () {
 			break; 
 		}
 		if (opend == 0x000E) {
-			if (this.[x] & 0x8) {
+			if (this.v[x] & 0x8) {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] << 1;
