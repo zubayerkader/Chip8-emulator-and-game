@@ -34,12 +34,33 @@ function updateReg() {
     }
 }
 
+function clearPointers () {
+    irender.clearText();
+    sprender.clearText();
+    pcrender.clearText();
+}
+
+function updatePointers () {
+    irender.setMsg("I = " + chip8.i);
+    sprender.setMsg("SP = " + chip8.sp);
+    pcrender.setMsg("PC = " + chip8.pc);
+}
+
+function drawPointers () {
+    irender.printToCanvas();
+    sprender.printToCanvas();
+    pcrender.printToCanvas();
+}
+
 function update() {
     clearDisplay();
     clearReg();
+    clearPointers();
     drawDisplay();
     updateReg();
     drawReg();
+    updatePointers();
+    drawPointers();
     setInterval(update,100);
 }
 
@@ -49,10 +70,14 @@ for (let r = 1; r <= 2; r++) {
     for (i; i < 11*r-((r-1)*6); i++) {
         //console.log(i,chip8.getV(i),(r-1)*30,((i-11*(r-1))+1)*13)
         let msg = "V"+i.toString()+"= "+chip8.getV(i);
-        regArr[i] = new textObj(document.getElementById("Memory"), msg, (r-1)*100, ((i-11*(r-1))+1)*14);
+        regArr[i] = new textObj(document.getElementById("Registers"), msg, (r-1)*100, ((i-11*(r-1))+1)*14);
         regArr[i].printToCanvas();
     }
 }
+
+let irender = new textObj(document.getElementById("Registers"), "I = " + chip8.i, 100, ((i-11)+1)*14); // TODO: Figure out how to make this cleaner.
+let sprender = new textObj(document.getElementById("Registers"), "SP = " + chip8.sp, 100, (((i+1)-11)+1)*14);
+let pcrender = new textObj(document.getElementById("Registers"), "PC = " + chip8.pc, 100, (((i+2)-11)+1)*14);
 
 for (let r = 0; r < 32; r++) {
     for (let c = 0; c < 64; c++) {
