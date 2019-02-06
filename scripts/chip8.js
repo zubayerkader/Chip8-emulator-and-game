@@ -15,20 +15,20 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     // The last register is the carry flag
     this.V = new Uint8Array(arraybuffer); 
     this.stack = new Uint8Array(arraybuffer);// For insturctions
-    this.ip = null; //Instruction Pointer
+    this.i = null; //Register I. The sprite pointer.
     this.sp = null; //Stack Pointer
     this.pc = 0x200; //program counter starts at 0x200
     this.delaytimer = null;
     this.soundtimer = null;
-    this.display = new Array(64*32);
+	this.display = new Array(64*32);
 
 }
 
-Chip8.prototype.setIP = function(memLocation) { // set Instruction pointer
-    this.ip = memLocation;
+Chip8.prototype.setI = function(memLocation) { // set I
+    this.i = memLocation;
 }
-Chip8.prototype.getIP = function() { 
-    return this.ip;
+Chip8.prototype.getI = function() { 
+    return this.i;
 }
 
 
@@ -75,7 +75,7 @@ Chip8.prototype.reset = function() {
 	this.delaytimer = 0; //set delay timer to 0
 	this.soundtimer = 0; //set soundtimer to 0
 	this.sp = 0; //stack pointer set to 0
-	this.ip = 0; //instruction pointer set to 0
+	this.i = 0; //instruction pointer set to 0
 	this.pc = 0x200;
     for (var i = 0; i < 64*32; i++) {// set display to black
     	this.display[i]=0;
@@ -207,7 +207,7 @@ function emulateCycle () {
 		break;
 	}
 	if (opno == 0xA000) {
-		this.ip = opconl3;
+		this.i = opconl3;
 		break;
 	}
 	if (opno == 0xB000) {
@@ -219,7 +219,22 @@ function emulateCycle () {
 		break;
 	}
 	if (opno == 0xD000) {
-		//PLEASE MAYDAY HELP I HAVE NO CLUE HOW TO DO THIS ONE
+		this.v[0xF] = 0;
+		var index;
+
+		for (var i = 0; i < opend; i++) { // height 0x000N
+			index = this.memory[this.i + i]; // Sprite location. One byte at a time.
+			for (var dx = 0; dx < 8; dx++) {
+				if ((index&0x80) > 0) { // 0x80 = 10000000
+					if (this.display[64 * ((this.v[x]+x)%32) + ((this.v[y]+i)%64)] == 1) {
+						this.v[0xF] = 1;
+					}
+					this.display[64 * ((this.v[x]+x)%32) + ((this.v[y]+i)%64)] ^= 1; // if pixel on display is 0 than set that pixel to 1 (0 XOR 1 = 1).
+				}
+				index = index << 1; // e.g. 1001 0101 = 0010 1010 & 1000 0000 fetches first MSB
+			}
+		}
+		break;
 	}
 	// opno == 0xE000 need to be made after input codes is written
 	if (opno == 0xF000) {
@@ -240,7 +255,7 @@ function emulateCycle () {
 			break;
 		}
 		if (opconl2 == 0x001E) {
-			this.ip = this.ip + this.v[x];
+			this.i = this.i + this.v[x];
 			break;
 		}
 		if (opconl2 == 0x0029) {

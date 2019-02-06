@@ -35,7 +35,6 @@ function updateReg() {
 }
 
 function update() {
-
     clearDisplay();
     clearReg();
     drawDisplay();
