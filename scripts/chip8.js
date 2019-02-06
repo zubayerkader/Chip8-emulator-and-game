@@ -20,8 +20,8 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.pc = 0x200; //program counter starts at 0x200
     this.delaytimer = null;
     this.soundtimer = null;
-	this.display = new Array(64*32);
-
+    this.display = new Array(64*32);
+    return this;
 }
 
 Chip8.prototype.setI = function(memLocation) { // set I
