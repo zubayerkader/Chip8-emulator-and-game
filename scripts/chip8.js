@@ -1,3 +1,6 @@
+//No getter and setter for memory?
+//Display's setter only for 0?
+//Cant setV to the value since V is not necessarily defined
 function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 
     // Reserves 4096 bytes of memory.
@@ -24,8 +27,11 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     return this;
 }
 
+module.exports = Chip8;
+
 Chip8.prototype.setI = function(memLocation) { // set I
     this.i = memLocation;
+    return this;
 }
 Chip8.prototype.getI = function() { 
     return this.i;
@@ -34,7 +40,9 @@ Chip8.prototype.getI = function() {
 
 Chip8.prototype.setSP = function(stackLocation) { // set Stack Pointer
     this.sp = stackLocation;
+    return this;
 }
+
 Chip8.prototype.getSP = function() {
     return this.sp;
 }
@@ -42,15 +50,18 @@ Chip8.prototype.getSP = function() {
 
 Chip8.prototype.setV = function(rnum,vnum){ // Set specific register
     this.V[rnum]=vnum;
+    return this;
 }
+
 Chip8.prototype.getV = function(num) {
     return this.V[num];
 }
 
-
 Chip8.prototype.setDelay = function() { //later to be moved to reset()
     this.delaytimer = 0;
+    return this;
 }
+
 Chip8.prototype.getDelay = function() {
     return this.delaytimer;
 }
@@ -58,6 +69,7 @@ Chip8.prototype.getDelay = function() {
 
 Chip8.prototype.setSound = function() { //later to be moved to reset()
     this.soundtimer = 0;
+    return this;
 }
 Chip8.prototype.getSound = function() {
     return this.soundtimer;
@@ -77,15 +89,9 @@ Chip8.prototype.reset = function() {
 	this.sp = 0; //stack pointer set to 0
 	this.i = 0; //instruction pointer set to 0
 	this.pc = 0x200;
-    for (var i = 0; i < 64*32; i++) {// set display to black
-    	this.display[i]=0;
-    }
-    for (var i = 0; i < 16; i++) {//set all registers to 0
-    	this.V[i]=0;
-    }
-    for (var i = 0; i < 4096; i++) {//set all mem to 0
-    	this.memory[i] = 0;
-    }
+        display.fill(0);
+        V.fill(0);
+        memory.fill(0);
 
 //tba
 }
