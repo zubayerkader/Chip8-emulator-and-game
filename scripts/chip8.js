@@ -90,7 +90,7 @@ Chip8.prototype.reset = function() {
 //tba
 }
 
-function emulateCycle () {
+Chip8.prototype.emulateCycle = function () {
 	var opcode = this.memory[this.pc] << 8 | this.memory[this.pc + 1];
 	var x = (opcode & 0x0F00) >> 8;
  	var y = (opcode & 0x00F0) >> 4;
