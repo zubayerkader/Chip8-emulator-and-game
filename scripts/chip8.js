@@ -105,7 +105,7 @@ Chip8.prototype.emulateCycle = function () {
 		if(opend == 0x0){
 			for (var i = 0; i<64*32; i++){
 				this.display[i]=0;
-				break;
+				return;
 			}
 		}
 		//opcode 00EE:
@@ -113,14 +113,14 @@ Chip8.prototype.emulateCycle = function () {
 		if(opend == 0xE){
 			this.sp = this.sp-1;
 			this.pc = this.stack[this.sp]
-			break;
+			return;
 		}
 	}
 	//opcode 1NNN:
 	//Jumps to location NNN by setting the program counter
 	if (opno == 0x1000){
 		this.pc == opconl3;
-		break;
+		return;
 	}
 	//opcode 2NNN:
 	//Calls the subroutine at NNN, 
@@ -128,7 +128,7 @@ Chip8.prototype.emulateCycle = function () {
 		this.stack[this.sp] = this.pc;
 		this.sp = this.sp+1;
 		this.pc = opconl3;
-		break;
+		return;
 	}
 	//opcode 3xNN:
 	//Skip the next instruction if V[x] = NN
@@ -136,7 +136,7 @@ Chip8.prototype.emulateCycle = function () {
 		if(this.v[x] == opconl2){
 			this.pc = this.pc + 2;
 		}
-		break;
+		return;
 	}
 	//opcode 4xNN:
 	//Skip the next instruction if V[x] != NN
@@ -144,7 +144,7 @@ Chip8.prototype.emulateCycle = function () {
 		if(this.v[x] != opconl2){
 			this.pc = this.pc + 2;
 		}
-		break;
+		return;
 	}
 	//opcode 5xy0
 	//Skip the next instuction if V[x] = V[y]
@@ -169,25 +169,25 @@ Chip8.prototype.emulateCycle = function () {
 		//set V[x] = V[y]
 		if (opend == 0x0000) {
 			this.v[x] = this.v[y];
-			break;
+			return;
 		}
 		//opcode 8xy1
 		//set V[x] = V[x] or V[y]
 		if (opend == 0x0001) {
 			this.v[x] = this.v[x] | this.v[y];
-			break;
+			return;
 		}
 		//opcode 8xy2
 		//set V[x] = V[x] and V[y]
 		if (opend == 0x0002) {
 			this.v[x] = this.v[x] & this.v[y];
-			break;
+			return;
 		}
 		//opcode 8xy3
 		//set V[x] = V[x] xor V[y]
 		if (opend == 0x0003) {
 			this.v[x] = this.v[x] ^ this.v[y];
-			break;
+			return;
 
 		}
 		//opcode 8xy4
@@ -198,7 +198,7 @@ Chip8.prototype.emulateCycle = function () {
 			if(this.v[x]>255){
 				this.v[0xF]= 1;
 			}
-			break;
+			return;
 
 		}
 		//opcode 8xy5
@@ -217,7 +217,7 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] >> 1;
-			break;
+			return;
 		}
 		//opcode 8xy7 
 		//set V[x] = V[y] - V[x]
@@ -227,7 +227,7 @@ Chip8.prototype.emulateCycle = function () {
 			if (this.v[y] > this.v[x]) {
 				this.v[0xF] = 0x1;
 			}
-			break; 
+			return; 
 		}
 		//opcode 8xyE
 		//set V[x] = V[x] << 1
@@ -236,7 +236,7 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] << 1;
-			break;
+			return;
 		} 
 	}
 	//opcode 9xy0
@@ -245,25 +245,25 @@ Chip8.prototype.emulateCycle = function () {
 		if (this.v[x] != this.v[y]) {
 			this.pc = this.pc + 2;
 		}
-		break;
+		return;
 	}
 	//opcode ANNN
 	//set ip = NNN
 	if (opno == 0xA000) {
 		this.i = opconl3;
-		break;
+		return;
 	}
 	//opcode BNNN
 	//set pc = V[0] + NNN
 	if (opno == 0xB000) {
 		this.pc = this.v[0x0] + opconl3;
-		break;
+		return;
 	}
 	//opcode CxNN
 	//Set V[x] = random byte & NN
 	if (opno == 0xC000) {
 		this.v[x] = (Math.random()*0xFF) & opconl2;
-		break;
+		return;
 	}
 	//opcode Dxyn
 	//Display a N-byte sprite starting at memory locaiton I at (V[x],V[y])
@@ -284,7 +284,7 @@ Chip8.prototype.emulateCycle = function () {
 				index = index << 1; // e.g. 1001 0101 = 0010 1010 & 1000 0000 fetches first MSB
 			}
 		}
-		break;
+		return;
 	}
 
 	// opno == 0xE000 need to be made after input codes is written
@@ -295,37 +295,37 @@ Chip8.prototype.emulateCycle = function () {
 		//set V[x] = Delay timer
 		if(opconl2 == 0x0007){
 			this.v[x] = this.delaytimer;
-			break;
+			return;
 		}
 
 		//opcode Fx0A need to be made after input codes
 		if(opconl2 == 0x000A){
 			//need to be made after input codes are written
-			break;
+			return;
 		}
 		//opcode Fx15
 		//set Delay timer = V[x]
 		if (opconl2 == 0x0015) {
 			this.delaytimer = this.v[x];
-			break;
+			return;
 		}
 		//opcode Fx18
 		//Set Sound timer = V[x]
 		if (opconl2 == 0x0018) {
 			this.soundtimer = this.v[x];
-			break;
+			return;
 		}
 		//opcode Fx1E
 		//Set I = I + V[x]
 		if (opconl2 == 0x001E) {
 			this.i = this.i + this.v[x];
-			break;
+			return;
 		}
 		//opcode Fx29
 		//Set I = the location of the sprite for digit V[x]
 		if (opconl2 == 0x0029) {
 			// need to be made after sprite is constructed
-			break;
+			return;
 		}
 		//opcode Fx55
 		// store registers V[0] through V[x] into memory from address ip
@@ -333,7 +333,7 @@ Chip8.prototype.emulateCycle = function () {
 			for (var i = 0; i<= x; i++){
 				this.memory[this.i + i] = this.v[i];
 			}
-			break;
+			return;
 		}
 		//opcode Fx65
 		//read the registers V[0] through V[x] from memory starting at address ip
@@ -344,7 +344,7 @@ Chip8.prototype.emulateCycle = function () {
 		}
 	}
 
-	break;
+	return;
 	//insert error code if opcode is not recognized
 	
 }
