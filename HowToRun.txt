@@ -1,0 +1,18 @@
+Open index.html with chrome or firefox
+
+If you are using firefox or any other browser.
+You'll have to figure out how to open the web console.
+
+If you are using chrome:
+
+Press f12 and click the "console" tab
+
+
+Once in the console:
+
+input "chip8.display[0] = 1" to turn on the top left corner of the display.
+input "chip8.memory[0x200] = <2 hexadecimals>" to input partial opcodes into memory.
+input "chip8.v[0] = 1" or "chip8.setV(0,1)" to change V[0] to 1.
+input "chip8.pc = 0x200" to change PC to 0x200.
+
+Please see chip8 methods and attributes for more interactions.
