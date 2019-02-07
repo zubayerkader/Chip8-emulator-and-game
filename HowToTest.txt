@@ -1,4 +1,4 @@
 Install Node.js from https://nodejs.org/en/download/
 Open Terminal and install Jest using "npm install --save-dev jest"
-Open chip8.test.js
-Input npm test into the terminal
+Change directory to your repository
+Input "npm test" into the terminal
