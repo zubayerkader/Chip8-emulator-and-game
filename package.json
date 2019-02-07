@@ -1,0 +1,22 @@
+{
+  "name": "team12",
+  "version": "1.0.0",
+  "description": "Chip 8 Emulator",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinaylohana/Team12.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinaylohana/Team12/issues"
+  },
+  "homepage": "https://github.com/vinaylohana/Team12#readme",
+  "dependencies": {
+    "chip8js": "^0.1.6"
+  }
+}
