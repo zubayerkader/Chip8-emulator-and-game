@@ -2,6 +2,9 @@
 // Few cases missing from reset function
 // Awaiting setters and getters for memory 
 // Buggy setV tester. Needs V array to be called after being reset.
+//No getter and setter for memory?
+//Display's setter only for 0?
+//Cant setV to the value since V is not necessarily defined
 
 const Chip8 = require("./chip8");
 
@@ -15,8 +18,8 @@ test("Testing Initial Conditions", () => {
     expect(chip8.soundtimer).toEqual(null);
     expect(chip8.memory).toBeInstanceOf(Uint8Array);
     expect(chip8.memory).toHaveLength(4096);
-    expect(chip8.V).toBeInstanceOf(Uint8Array);
-    expect(chip8.V).toHaveLength(16);
+    expect(chip8.v).toBeInstanceOf(Uint8Array);
+    expect(chip8.v).toHaveLength(16);
     expect(chip8.stack).toBeInstanceOf(Uint8Array); // Conflict. Datatype -> Array
     expect(chip8.stack).toHaveLength(16); // Conflict. Length -> 0
     expect(chip8.display).toBeInstanceOf(Array);
@@ -43,8 +46,8 @@ test("Test setV function. Set v[rnum] register to value vnum", () => {
     const rnum = 0;
     const vnum = 0xff;
     const testV = Chip8.prototype.setV(rnum, vnum);
-    expect(testV.V[rnum]).toEqual(vnum);
-//    expect(testV.V[rnum]).not.toEqual(Chip8.prototype.reset());
+    expect(testV.v[rnum]).toEqual(vnum);
+//    expect(testV.v[rnum]).not.toEqual(Chip8.prototype.reset());
 });
 */
 test("Test setDelay function. Set delaytimer to 0", () => {
