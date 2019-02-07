@@ -91,7 +91,7 @@ Chip8.prototype.reset = function() {
 	this.pc = 0x200;
 
     display.fill(0);
-    V.fill(0);
+    v.fill(0);
     memory.fill(0);
 
 //tba
