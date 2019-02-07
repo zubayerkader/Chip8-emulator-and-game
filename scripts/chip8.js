@@ -25,7 +25,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     return this;
 }
 
-// module.exports = Chip8;
+module.exports = Chip8;
 
 Chip8.prototype.setI = function(memLocation) { // set I
     this.i = memLocation;
