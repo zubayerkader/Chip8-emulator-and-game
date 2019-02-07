@@ -13,7 +13,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 
     // registers named from 0 to 15.
     // The last register is the carry flag
-    this.V = new Uint8Array(arraybuffer); 
+    this.v = new Uint8Array(arraybuffer); 
     this.stack = new Uint8Array(arraybuffer);// For insturctions
     this.i = null; //Register I. The sprite pointer.
     this.sp = null; //Stack Pointer
@@ -41,10 +41,10 @@ Chip8.prototype.getSP = function() {
 
 
 Chip8.prototype.setV = function(rnum,vnum){ // Set specific register
-    this.V[rnum]=vnum;
+    this.v[rnum]=vnum;
 }
 Chip8.prototype.getV = function(num) {
-    return this.V[num];
+    return this.v[num];
 }
 
 
@@ -81,7 +81,7 @@ Chip8.prototype.reset = function() {
     	this.display[i]=0;
     }
     for (var i = 0; i < 16; i++) {//set all registers to 0
-    	this.V[i]=0;
+    	this.v[i]=0;
     }
     for (var i = 0; i < 4096; i++) {//set all mem to 0
     	this.memory[i] = 0;
@@ -276,10 +276,10 @@ Chip8.prototype.emulateCycle = function () {
 			index = this.memory[this.i + i]; // Sprite location. One byte at a time.
 			for (var dx = 0; dx < 8; dx++) {
 				if ((index&0x80) > 0) { // 0x80 = 10000000
-					if (this.display[64 * ((this.v[x]+x)%32) + ((this.v[y]+i)%64)] == 1) {
+					if (this.display[64 * ((this.v[x]+i)%32) + ((this.v[y]+dx)%64)] == 1) {
 						this.v[0xF] = 1;
 					}
-					this.display[64 * ((this.v[x]+x)%32) + ((this.v[y]+i)%64)] ^= 1; // if pixel on display is 0 than set that pixel to 1 (0 XOR 1 = 1).
+					this.display[64 * ((this.v[x]+i)%32) + ((this.v[y]+dx)%64)] ^= 1; // if pixel on display is 0 than set that pixel to 1 (0 XOR 1 = 1).
 				}
 				index = index << 1; // e.g. 1001 0101 = 0010 1010 & 1000 0000 fetches first MSB
 			}
