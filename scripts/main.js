@@ -30,7 +30,7 @@ function drawReg() {
 
 function updateReg() {
     for (let i = 0; i < regArr.length; i++) {
-        regArr[i].setMsg("V" + i.toString() + " = " + chip8.getV(i));
+        regArr[i].setMsg("V" + i.toString() + " = " + chip8.v[i]);
     }
 }
 
@@ -69,7 +69,7 @@ let i = 0
 for (let r = 1; r <= 2; r++) {
     for (i; i < 11*r-((r-1)*6); i++) {
         //console.log(i,chip8.getV(i),(r-1)*30,((i-11*(r-1))+1)*13)
-        let msg = "V"+i.toString()+"= "+chip8.getV(i);
+        let msg = "V"+i.toString()+"= "+chip8.v[i];
         regArr[i] = new textObj(document.getElementById("Registers"), msg, (r-1)*100, ((i-11*(r-1))+1)*14);
         regArr[i].printToCanvas();
     }
