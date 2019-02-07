@@ -1,0 +1,405 @@
+(S)Chip-48 Assembler V2.11 by Christian Egeberg 20/8-'91
+
+TargetFile: snake
+SourceFile: snake.asm
+ListFile: snake.lst
+
+Reading: snake.asm
+
+Done reading
+
+-----   *INSTRUCTIONS*   -----
+
+     DW #0000     
+snake.asm(6).. 200: 0000
+     DB #00  
+snake.asm(7).. 202: 00
+     DW #3E05  
+snake.asm(8).. 204: 3E05
+     DW #1E01  
+snake.asm(9).. 206: 1E01
+     DW #0004  
+snake.asm(10).. 208: 0004
+     CLS              
+snake.asm(13).. 20A: 00E0
+     LD   I,  F1    
+snake.asm(15).. 20C: A200
+     LD   VE,  [I]    
+snake.asm(16).. 20E: FE65
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 18
+     LD   I,  L368    
+------------------------------------------------------------------------------
+     LD   I,  L368    
+snake.asm(18).. 210: A000
+     LD   [I], V0     
+snake.asm(21).. 212: F055
+     SE   V1,  #00    
+snake.asm(22).. 214: 3100
+     JP   F3        
+snake.asm(23).. 216: 1212
+     LD   I,  F21     
+snake.asm(25).. 218: A2E6
+     DRW  V4,  V2, 1   
+snake.asm(29).. 21A: D421
+     ADD  V4,  #03      
+snake.asm(30).. 21C: 7403
+     JP   F4         
+snake.asm(31).. 21E: 121A
+     LD   V3,  #04     
+snake.asm(33).. 220: 6304
+     DRW  V3,  V2, 9   
+snake.asm(36).. 222: D329
+     DRW  V4,  V2, 9   
+snake.asm(37).. 224: D429
+     ADD  V2,  #09     
+snake.asm(38).. 226: 7209
+     SE   V2,  #3F     
+snake.asm(39).. 228: 323F
+     JP   F5         
+snake.asm(40).. 22A: 1222
+     LD   V3,  #2E     
+snake.asm(43).. 22C: 632E
+     CALL F12         
+snake.asm(44).. 22E: 229A
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 46
+     LD   I,  L202     
+------------------------------------------------------------------------------
+     LD   I,  L202     
+snake.asm(46).. 230: A000
+     LD   B,   V5      
+snake.asm(47).. 232: F533
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 48
+     CALL L2E2         
+------------------------------------------------------------------------------
+     CALL L2E2         
+snake.asm(48).. 234: 2000
+     CALL F17         
+snake.asm(50).. 236: 22D0
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 53
+     LD   I,  L35E     
+------------------------------------------------------------------------------
+     LD   I,  L35E     
+snake.asm(53).. 238: A000
+     DRW  V7,  V6, 1   
+snake.asm(54).. 23A: D761
+     ADD  V6,  #FE     
+snake.asm(55).. 23C: 76FE
+     SE   V6,  #11     
+snake.asm(56).. 23E: 3611
+     JP   F6         
+snake.asm(57).. 240: 1238
+     LD   DT,  V3  
+snake.asm(60).. 242: F315
+     ADD  I,   V8  
+snake.asm(61).. 244: F81E
+     LD   V0,  [I]  
+snake.asm(62).. 246: F065
+     LD   V4,  V0  
+snake.asm(63).. 248: 8400
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 64
+     LD   I,  L368  
+------------------------------------------------------------------------------
+     LD   I,  L368  
+snake.asm(64).. 24A: A000
+     LD   V0,  VA  
+snake.asm(66).. 24C: 80A0
+     LD   [I], V0  
+snake.asm(67).. 24E: F055
+     ADD  I,   V8  
+snake.asm(69).. 250: F81E
+     LD   V0,  [I]  
+snake.asm(70).. 252: F065
+     LD   V1,  V0  
+snake.asm(71).. 254: 8100
+     LD   V0,  VB  
+snake.asm(72).. 256: 80B0
+     LD   [I], V0  
+snake.asm(74).. 258: F055
+     LD   I,  F23  
+snake.asm(75).. 25A: A2F0
+     DRW  VA,  VB, 2  
+snake.asm(76).. 25C: DAB2
+     ADD  VA,  V0  
+snake.asm(77).. 25E: 8A04
+     ADD  VB,  V1  
+snake.asm(78).. 260: 8B14
+     LD   I,  F22  
+snake.asm(79).. 262: A2EA
+     SE   V4,  #00  
+snake.asm(80).. 264: 3400
+     DRW  V4,  V1, 3  
+snake.asm(81).. 266: D413
+     SE   VF,  #00  
+snake.asm(83).. 268: 3F00
+     JP   F13  
+snake.asm(84).. 26A: 12A8
+     RND  V0,  #0F  
+snake.asm(86).. 26C: C00F
+     SNE  V0,  #00  
+snake.asm(87).. 26E: 4000
+     CALL F16  
+snake.asm(88).. 270: 22CC
+     ADD  V8,  #01  
+snake.asm(91).. 272: 7801
+     SNE  V8,  VE  
+snake.asm(92).. 274: 98E0
+     LD   V8,  #00  
+snake.asm(93).. 276: 6800
+     LD   V1,  #08  
+snake.asm(96).. 278: 6108
+     SKP  V1  
+snake.asm(97).. 27A: E19E
+     LD   V6,  #00  
+snake.asm(98).. 27C: 6600
+     SKP  V1  
+snake.asm(99).. 27E: E19E
+     JP   F10  
+snake.asm(100).. 280: 1282
+     LD   V1,  #09  
+snake.asm(103).. 282: 6109
+     SKP  V1  
+snake.asm(104).. 284: E19E
+     LD   V7,  #00  
+snake.asm(105).. 286: 6700
+     ADD  V9,  #FE  
+snake.asm(106).. 288: 79FE
+     LD   V7,  #06  
+snake.asm(107).. 28A: 6706
+     AND  V9,  V7  
+snake.asm(108).. 28C: 8972
+     LD   V3,  DT  
+snake.asm(111).. 28E: F307
+     JP   F9  
+snake.asm(112).. 290: 1278
+     JP   F7  
+snake.asm(113).. 292: 1242
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 116
+     CALL L2E2  
+------------------------------------------------------------------------------
+     CALL L2E2  
+snake.asm(116).. 294: 2000
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 117
+     LD   I,  L202  
+------------------------------------------------------------------------------
+     LD   I,  L202  
+snake.asm(117).. 296: A000
+     LD   B,   V5  
+snake.asm(118).. 298: F533
+     LD   V4,  #7C     
+snake.asm(121).. 29A: 647C
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 122
+     LD   I,  L202     
+------------------------------------------------------------------------------
+     LD   I,  L202     
+snake.asm(122).. 29C: A000
+     LD   V2,  [I]     
+snake.asm(123).. 29E: F265
+     LD   F,   V1      
+snake.asm(125).. 2A0: F129
+     DRW  V4,  V3, 5   
+snake.asm(126).. 2A2: D435
+     ADD  V3,  #06     
+snake.asm(127).. 2A4: 7306
+     RET               
+snake.asm(129).. 2A6: 00EE
+     CALL F19         
+snake.asm(132).. 2A8: 22DA
+     LD   I,  F21  
+snake.asm(134).. 2AA: A2E6
+     DRW  VA,  VB, 3  
+snake.asm(135).. 2AC: DAB3
+     LD   V4,  #02  
+snake.asm(136).. 2AE: 6402
+     LD   ST,  V4  
+snake.asm(137).. 2B0: F418
+     ADD  V5,  #01  
+snake.asm(138).. 2B2: 7501
+     CALL L2DC  
+snake.asm(139).. 2B4: 2294
+     JP   F8  
+snake.asm(140).. 2B6: 1272
+     LD   V4,  #0A  
+snake.asm(143).. 2B8: 640A
+     SUB  VA,  V0  
+snake.asm(145).. 2BA: 8A05
+     SUB  VB,  V1  
+snake.asm(146).. 2BC: 8B15
+     LD   I,  F23  
+snake.asm(148).. 2BE: A2F0
+     DRW  VA,  VB, 2  
+snake.asm(149).. 2C0: DAB2
+------------------------------------------------------------------------------
+Warning: Unable to evaluate parameter
+Associated file snake.asm line 151
+     LD   I,  L206  
+------------------------------------------------------------------------------
+     LD   I,  L206  
+snake.asm(151).. 2C2: A000
+     LD   V0,  [I]  
+snake.asm(152).. 2C4: F065
+     SNE  VF,  #00  
+snake.asm(153).. 2C6: 4F00
+     LD   [I], V0  
+snake.asm(154).. 2C8: F055
+     JP   F15  
+snake.asm(157).. 2CA: 12CA
+     ADD  VE,  #01  
+snake.asm(160).. 2CC: 7E01
+     RET  
+snake.asm(161).. 2CE: 00EE
+     LD   I,  F24     
+snake.asm(164).. 2D0: A2F4
+     RND  VC,  #7C     
+snake.asm(166).. 2D2: CC7C
+     ADD  VC,  #02     
+snake.asm(167).. 2D4: 7C02
+     DRW  VC,  VD, 7   
+snake.asm(169).. 2D6: DCD7
+     SNE  VF,  #00                 
+snake.asm(170).. 2D8: 4F00
+     LD   I,  F24     
+snake.asm(173).. 2DA: A2F4
+     DRW  VC,  VD, 7   
+snake.asm(174).. 2DC: DCD7
+     JP   F18         
+snake.asm(175).. 2DE: 12D2
+     DW   #0400   
+snake.asm(179).. 2E0: 0400
+     DW   #00FC   
+snake.asm(180).. 2E2: 00FC
+     DW   #0004   
+snake.asm(181).. 2E4: 0004
+     DB $11......   
+snake.asm(184).. 2E6: C0
+     DB $11......  
+snake.asm(185).. 2E8: C0
+     DB $1.1.....   
+snake.asm(187).. 2EA: A0
+     DB $111.....  
+snake.asm(188).. 2EC: E0
+     DB $1.1.....  
+snake.asm(189).. 2EE: A0
+     DB $........   
+snake.asm(192).. 2F0: 00
+     DB $.1......   
+snake.asm(193).. 2F2: 40
+     DB $..111...   
+snake.asm(196).. 2F4: 38
+     DB $.11111..  
+snake.asm(197).. 2F6: 7C
+     DB $.11111..  
+snake.asm(198).. 2F8: 7C
+     DB $..111...  
+snake.asm(199).. 2FA: 38
+F25: DB $111.....   
+snake.asm(201).. 2FC: E0
+
+-----   *SYMBOLS*   -----
+
+200 F1 snake.asm(5)
+  snake.asm(15)
+282 F10 snake.asm(102)
+  snake.asm(100)
+------------------------------------------------------------------------------
+Warning: Unused symbol detected
+Symbol F11 file snake.asm line 110
+F11:  
+------------------------------------------------------------------------------
+28E F11 snake.asm(110)
+29A F12 snake.asm(120)
+  snake.asm(44)
+2A8 F13 snake.asm(131)
+  snake.asm(84)
+------------------------------------------------------------------------------
+Warning: Unused symbol detected
+Symbol F14 file snake.asm line 142
+F14:  
+------------------------------------------------------------------------------
+2B8 F14 snake.asm(142)
+2CA F15 snake.asm(156)
+  snake.asm(157)
+2CC F16 snake.asm(159)
+  snake.asm(88)
+2D0 F17 snake.asm(163)
+  snake.asm(50)
+2D2 F18 snake.asm(165)
+  snake.asm(175)
+2DA F19 snake.asm(172)
+  snake.asm(132)
+------------------------------------------------------------------------------
+Warning: Unused symbol detected
+Symbol F2 file snake.asm line 12
+F2:  
+------------------------------------------------------------------------------
+20A F2 snake.asm(12)
+------------------------------------------------------------------------------
+Warning: Unused symbol detected
+Symbol F20 file snake.asm line 177
+F20:  
+------------------------------------------------------------------------------
+2E0 F20 snake.asm(177)
+2E6 F21 snake.asm(183)
+  snake.asm(25)
+  snake.asm(134)
+2EA F22 snake.asm(186)
+  snake.asm(79)
+2F0 F23 snake.asm(191)
+  snake.asm(75)
+  snake.asm(148)
+2F4 F24 snake.asm(195)
+  snake.asm(164)
+  snake.asm(173)
+------------------------------------------------------------------------------
+Warning: Unused symbol detected
+Symbol F25 file snake.asm line 201
+F25: DB $111.....   
+------------------------------------------------------------------------------
+2FC F25 snake.asm(201)
+212 F3 snake.asm(20)
+  snake.asm(23)
+21A F4 snake.asm(28)
+  snake.asm(31)
+222 F5 snake.asm(35)
+  snake.asm(40)
+238 F6 snake.asm(52)
+  snake.asm(57)
+242 F7 snake.asm(59)
+  snake.asm(113)
+272 F8 snake.asm(90)
+  snake.asm(140)
+278 F9 snake.asm(95)
+  snake.asm(112)
+294 L2DC snake.asm(115)
+  snake.asm(139)
+
+-----   *CONDITIONS*   -----
+
+DEF ALIGNON
+DEF CHIP48
+UND CHIP8
+UND HPASC
+DEF HPHEAD
+UND SCHIP10
+UND SCHIP11
+UND USEDON
+UND USEDYES
+DEF XREFON
+DEF XREFYES
+
+Total number of warnings: 14
