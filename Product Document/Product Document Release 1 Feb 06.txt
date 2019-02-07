@@ -1,0 +1,125 @@
+# **Product Document Group 12 release 0**
+---
+ ***Denotes Changes**
+### **Introduction**
+**WhatÅfs the project is about:**
+   * Implementing a Chip 8 emulator in JavaScript,
+   * A couple of Chip 8 games, 
+   * Use automated testing to debug the emulator,
+   * Implement some useful programs using chip8,
+   * Implement a visualizer to visualize our chip8 code line by line.
+
+### **Project Organization**
+---
+##### &nbsp;&nbsp;&nbsp;&nbsp;Meeting schedule
+   * &nbsp;&nbsp;Mon 10:30am - 11:30am
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;Communication tools/techniques our team plans to use
+   * &nbsp;&nbsp;Discord
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;Software repository your team plans to use
+   * &nbsp;&nbsp;Github
+
+
+### **Risk Analysis**
+---
+   *  **People leaving the group**
+       * Solved by splitting the work evenly among group members so if absences occur there is still someone working on all the modules.
+
+   * **Inexperience with Javascript and Chip 8 system**
+       * Learning as we program and debugging as we go so we can get work done despite our inexperience
+
+### **Work Breakdown**
+---
+***Revised**
+###### (For Release 2)
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Harry Ceong
+   *   &nbsp;&nbsp; File and Keyboard input for chip8
+#####  &nbsp;&nbsp;&nbsp;&nbsp;George Yang
+   *   &nbsp;&nbsp; Debugging of the Emulator
+   *   &nbsp;&nbsp; Creating a Åguseful toolÅh 
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Kazi zubayer quader Dhrubo
+   *   &nbsp;&nbsp; Debugging of first game
+   *   &nbsp;&nbsp; Skeleton of Visualizer 
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Shanilla Javed
+   *   &nbsp;&nbsp; Start creating the second game
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Vinay Lohana
+   *   &nbsp;&nbsp; Start creating the second game
+
+### **Hardware and software requirements**
+---
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Hardware
+   *   &nbsp;&nbsp; Laptops or Computer.
+
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Software
+   *   &nbsp;&nbsp; Text Editor.
+
+### **Details of the software methodology**
+---
+#### Testing and Quality assurance tools and methods
+   * Continuous Integration
+   * Gradle/TeamCity
+
+#### Main implementation language our team plans to use
+   * JavaScript
+#### Software Methodology used 
+   * Incremental development
+
+### **Detailed use cases for all major features planned for the next release (Release 2)**
+---
+   * ~~The first game can be run on a separate chip8 emulator for users to run~~ (Not done)
+   * ~~Programmers can change chip8 variables through the browserÅfs console~~ (Done)
+   * ~~Programmers will be able to use the testing tool to find errors within the program~~(Done) 
+   * ***New** Users can load chip8 files into the chip8 memory.
+   * ***New** Users can interact with chip8 keyboard.
+   * ***New** Users can see memory values through the display.
+   * ***New** Users can go backwards in the program.
+   * ***New** The first game will be functional as an example for users
+
+### **Revised Detailed work schedule for release**
+--- 
+   * ~~Jan 13th Github Repository~~ 
+   * ~~**Jan 18th Release 0**~~
+   * ~~Feb 1st Buggy Emulator & First Game & Testing Tool~~
+   * ***Finished** Skeleton of chip8 (Finished the operation codes and the renderer)
+   * ***Finished** Buggy testing tool operational
+   * ***Finished** Buggy version of First game done
+   * **Feb 6th Release 1** 
+   * ***Revised** Feb 16th Emulator(Completely Finished) by George and Harry
+   * ***New** First game Debugged Kazi zubayer quader Dhrubo
+   * ***Revised** Skeleton of code for visualiser 
+   * ***Revised** Feb 23th Emulator and Game tested by Vinay and Shanilla
+   * **Feb 27th Release 2** 
+   * Mar 8th Second Game
+   * ***Revised** Visualizer completed
+   * **Mar 13th Release 3** 
+   * Mar 15th Complete test starts
+   * Apr 5th Complete test end
+   * **Apr 8th Release 4** 
+
+ ### **Monitoring and reporting mechanisms**
+---
+   * Reporting during weekly meetings  
+   * Checking in regularly on Discord 
+---
+### **Product Document Release 1 Feb 6th 2019 Changes Summary**
+**New**
+ #### Finished for release 1
+   * Buggy first game
+   * Buggy testing tool
+   * Skeleton of emulator(opcodes and renderer)
+
+
+ #### Features planned for next release:
+   *  Users can load chip8 files into the chip8 memory
+   *  Users can interact with chip8 keyboard
+   *  Memory will now be displayed
+   *  Users can go backwards in the program
+   *  The first game will be done as for an example for users
+
+#### Product release:
+   *  Usable version of the software in Cmpt276release1.zip. Please see HowToRun.txt for instructions.
+   *  Automated testing for the release is also included. Please see HowToTest.txt.
+   *  A buggy first game is one of the features planned to be done before release 1, however due to inexperience with Chip8 language we couldn't get it done.
+   *  Rendering the display, register and flags is an unplanned features that was implemented. To compensate for the lack of first game.
+
