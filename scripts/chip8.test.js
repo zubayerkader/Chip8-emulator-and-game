@@ -1,10 +1,3 @@
-// Missing set display tester 
-// Few cases missing from reset function
-// Awaiting setters and getters for memory 
-// Buggy setV tester. Needs V array to be called after being reset.
-//No getter and setter for memory?
-//Display's setter only for 0?
-//Cant setV to the value since V is not necessarily defined
 
 const Chip8 = require("./chip8");
 
@@ -20,8 +13,8 @@ test("Testing Initial Conditions", () => {
     expect(chip8.memory).toHaveLength(4096);
     expect(chip8.v).toBeInstanceOf(Uint8Array);
     expect(chip8.v).toHaveLength(16);
-    expect(chip8.stack).toBeInstanceOf(Uint8Array); // Conflict. Datatype -> Array
-    expect(chip8.stack).toHaveLength(16); // Conflict. Length -> 0
+    expect(chip8.stack).toBeInstanceOf(Uint8Array);
+    expect(chip8.stack).toHaveLength(16);
     expect(chip8.display).toBeInstanceOf(Array);
     expect(chip8.display).toHaveLength(64 * 32);
 });
