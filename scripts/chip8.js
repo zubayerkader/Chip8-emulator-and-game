@@ -1,6 +1,4 @@
-//No getter and setter for memory?
-//Display's setter only for 0?
-//Cant setV to the value since V is not necessarily defined
+
 function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 
     // Reserves 4096 bytes of memory.
