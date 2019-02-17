@@ -61,7 +61,6 @@ function update() {
     drawReg();
     updatePointers();
     drawPointers();
-    setInterval(update,100);
 }
 
 

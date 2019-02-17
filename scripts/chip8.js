@@ -10,7 +10,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.memory = new Uint8Array(arraybuffer);
 
     // Chip8 has 16 8 bit data registers. 
-    arraybuffer = new ArrayBuffer(16);
+	arraybuffer = new ArrayBuffer(16);
 
     // registers named from 0 to 15.
     // The last register is the carry flag
@@ -21,7 +21,8 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.pc = 0x200; //program counter starts at 0x200
     this.delaytimer = null;
     this.soundtimer = null;
-    this.display = new Array(64*32);
+	this.display = new Array(64*32);
+	this.running = false;
     return this;
 }
 
@@ -32,6 +33,44 @@ try
 catch(err)
 {
 
+}
+
+Chip8.prototype.loadProgram = function() {
+	var programpath = document.getElementById("file").files;
+
+	var file = programpath[0];
+	var reader = new FileReader();
+
+	reader.onload = function (e) {
+		let data = new Uint8Array(this.result);
+		for (let i = 0; i < data.length; i++) {
+			chip8.memory[0x200 + i] = data[i];
+		}
+	};
+
+	reader.readAsArrayBuffer(file);
+}
+
+Chip8.prototype.run = function() {
+	//TODO: Figure out how the delays plays a part.
+	this.running = true;
+	var self = this;
+	
+	function running () {
+		for (let i = 0; i < 5; i++) { //run 5 lines of opcodes and let the rest of the code run too. We dont have threading.
+			if (self.running) {
+				self.emulateCycle();
+				update();
+			}
+		}
+	}
+
+	setInterval(running, 100);
+	
+}
+
+Chip8.prototype.stop = function() {
+	this.running = false;
 }
 
 Chip8.prototype.setI = function(memLocation) { // set I
@@ -57,6 +96,7 @@ Chip8.prototype.setV = function(rnum,vnum){ // Set specific register
     this.v[rnum]=vnum;
     return this;
 }
+
 
 Chip8.prototype.getV = function(num) {
     return this.v[num];
@@ -94,12 +134,28 @@ Chip8.prototype.reset = function() {
 	this.sp = 0; //stack pointer set to 0
 	this.i = 0; //instruction pointer set to 0
 	this.pc = 0x200;
+	this.running = false;
 
-    display.fill(0);
-    v.fill(0);
-    memory.fill(0);
-    return this;
-//tba
+	for (let i = 0; i < this.display.length; i++) {
+		this.display[i] = 0;
+	}
+
+	for (let i = 0; i < this.v.length; i++) {
+		this.v[i] = 0;
+	}
+
+	for (let i = 0 ; i < this.memory.length; i++) {
+		this.memory[i] = 0;
+	}
+	update();
+	return this
+	//tba
+}
+
+Chip8.prototype.step = function () {
+	if (!this.running) {
+		this.emulateCycle();
+	}
 }
 
 Chip8.prototype.emulateCycle = function () {

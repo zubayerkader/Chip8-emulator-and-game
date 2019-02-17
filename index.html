@@ -9,12 +9,17 @@
     </head>
     <body>
 
+        <form>
+            <input type="file" id="file" name="file"> <input type="button" onclick="chip8.loadProgram()" value="Load">
+        </form>
+
         <div id="Chip8Display">
                 <canvas id="display" width="640" height="320">Get a better browser that supports HTML5</canvas>
         </div>
 
         <canvas id="Memory" width="320" height="160">Get a better browser that supports HTML5</canvas><canvas id="Registers" width="320" height="160">Get a better browser that supports HTML5</canvas>
-
+        <br>
+        <input type="button" onclick="chip8.reset()" value="Reset"><input type="button" onclick="chip8.step()" value="Step"><input type="button" onclick="chip8.run()" value="Run"><input type="button" onclick="chip8.stop()" value="Stop">
         <script src = "scripts/chip8.js"></script>
         <script src = "scripts/render.js"></script>
         <script src = "scripts/main.js"></script>
