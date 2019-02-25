@@ -53,20 +53,23 @@ Chip8.prototype.loadProgram = function() {
 }
 
 Chip8.prototype.run = function() {
-	//TODO: Figure out how the delays plays a part.
-	this.running = true;
-	var self = this;
+	//TODO: Figure out how the delays work during runtime
+	if (this.running == false) { // prevent multiple instances of run
+		this.running = true;
+		var self = this;
 	
-	function running () {
-		for (let i = 0; i < 5; i++) { //run 5 lines of opcodes and let the rest of the code run too. We dont have threading.
-			if (self.running) {
-				self.emulateCycle();
-				update();
+		function running () {
+			for (let i = 0; i < 5; i++) { //run 5 lines of opcodes and let the rest of the code run too. We dont have threading.
+				if (self.running) {
+					self.emulateCycle();
+					update();
+				}
 			}
 		}
-	}
 
-	setInterval(running, 100);
+		setInterval(running, 100);
+	}
+	
 	
 }
 
@@ -148,19 +151,11 @@ Chip8.prototype.reset = function() {
 	for (let i = 0 ; i < this.memory.length; i++) {
 		this.memory[i] = 0;
 	}
-	var programpath = document.getElementById("file").files;
+	try {
+		this.loadProgram(); // reload program
+	} catch {
+	}
 
-	var file = programpath[0];
-	var reader = new FileReader();
-
-	reader.onload = function (e) {
-		let data = new Uint8Array(this.result);
-		for (let i = 0; i < data.length; i++) {
-			chip8.memory[0x200 + i] = data[i];
-		}
-	};
-
-	reader.readAsArrayBuffer(file);
 	update();
 	return this
 	//tba
