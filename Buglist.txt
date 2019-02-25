@@ -1,0 +1,2 @@
+1. Reset needs to reload program along with after clearing the memory (solved)
+2. 

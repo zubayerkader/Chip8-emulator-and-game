@@ -23,6 +23,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.soundtimer = null;
 	this.display = new Array(64*32);
 	this.running = false;
+	this.keys = {};
     return this;
 }
 
@@ -147,6 +148,19 @@ Chip8.prototype.reset = function() {
 	for (let i = 0 ; i < this.memory.length; i++) {
 		this.memory[i] = 0;
 	}
+	var programpath = document.getElementById("file").files;
+
+	var file = programpath[0];
+	var reader = new FileReader();
+
+	reader.onload = function (e) {
+		let data = new Uint8Array(this.result);
+		for (let i = 0; i < data.length; i++) {
+			chip8.memory[0x200 + i] = data[i];
+		}
+	};
+
+	reader.readAsArrayBuffer(file);
 	update();
 	return this
 	//tba
@@ -167,6 +181,9 @@ Chip8.prototype.emulateCycle = function () {
 	var opconl2 = opcode & 0x00FF;
 	var opconl3 = opcode & 0x0FFF; 
 	this.pc = this.pc + 2;
+	if(this.pc >= 4096){
+		return;
+	}
 	if (opno == 0x0000){
 		//opode 00E0: 
 		//Clears the display
@@ -219,18 +236,21 @@ Chip8.prototype.emulateCycle = function () {
 	if (opno == 0x5000){
 		if(this.v[x] == this.v[y]){
 			this.pc = this.pc + 2;
+			return;
 		}
 	}
 	//opcode 6xNN
 	//set V[x] = NN
 	if (opno == 0x6000){
 		this.v[x] = opconl2;
+		return;
 	}
 	//opcode 7xNN
 	//set V[x] = V[x] + NN
 	if (opno == 0x7000){
 		this.v[x] = this.v[x] + opconl2;
 		//might have conditions tied to it (such as if size exceeds emulator parameters)
+		return;
 	}
 	if (opno == 0x8000){
 		//opcode 8xy0
@@ -277,6 +297,7 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] - this.v[y];
+			return;
 		}
 		//opcode 8xy6
 		//set V[x] = V[x] >> 1 
@@ -356,7 +377,21 @@ Chip8.prototype.emulateCycle = function () {
 	}
 
 	// opno == 0xE000 need to be made after input codes is written
-	
+	if (opno == 0xE000) {
+		if(opend == 0x000E){
+			if(this.keys[this.v[x]] == true){
+				this.pc = this.pc + 2;
+				return;
+			}
+		}
+		if(opend == 0x0001){
+			if(this.keys[this.v[x]] == false){
+				this.pc = this.pc + 2;
+				return;
+			} 
+
+		}
+	}
 
 	if (opno == 0xF000) {
 		//opcode Fx07
