@@ -1,0 +1,449 @@
+(S)Chip-48 Assembler V2.11 by Christian Egeberg 20/8-'91
+
+TargetFile: snake.rom
+SourceFile: snake.asm
+ListFile: snake.rom.lst
+
+Reading: snake.asm
+
+Done reading
+
+-----   *INSTRUCTIONS*   -----
+
+ CLS 
+snake.asm(25).. 200: 00E0
+ LD I, xcoordinate  
+snake.asm(27).. 202: A347
+ LD V0, #00 
+snake.asm(28).. 204: 6000
+ LD V1, #00 
+snake.asm(29).. 206: 6100
+ LD V2, #01 
+snake.asm(30).. 208: 6201
+ LD [I], V0     ; ERASE 256B AFTER END OF PROGRAM TO REFRESH DISPLAY MEMORY 
+snake.asm(32).. 20A: F055
+ ADD I, V2     ;  
+snake.asm(33).. 20C: F21E
+ ADD V1, #01     
+snake.asm(34).. 20E: 7101
+ SE V1, #00      
+snake.asm(35).. 210: 3100
+ JP refreshdisplaymemory 
+snake.asm(36).. 212: 120A
+ LD I, head 
+snake.asm(40).. 214: A33A
+ LD VA, #06 
+snake.asm(41).. 216: 6A06
+ LD VB, #0F 
+snake.asm(42).. 218: 6B0F
+ DRW VA, VB, 3 
+snake.asm(43).. 21A: DAB3
+ LD V2, #01   ; Y TOP - 1 
+snake.asm(46).. 21C: 6201
+ LD V3, #1E  ; Y BOTTOM - 30 
+snake.asm(47).. 21E: 631E
+ LD V4, #01  ; X STARTS AT 1, ENDS AT 57 (0x39) 
+snake.asm(48).. 220: 6401
+ LD I, horizontalline 
+snake.asm(50).. 222: A339
+ DRW V4, V2, 1 
+snake.asm(51).. 224: D421
+ DRW V4, V3, 1 
+snake.asm(52).. 226: D431
+ ADD V4, #04 
+snake.asm(53).. 228: 7404
+ SE V4, #39 
+snake.asm(54).. 22A: 3439
+ JP drwhorizontalline 
+snake.asm(55).. 22C: 1222
+ LD V2, #01   ; X LEFT - 1 
+snake.asm(58).. 22E: 6201
+ LD V3, #38  ; X RIGHT - 57 
+snake.asm(59).. 230: 6338
+ LD V4, #02  ; Y STARTS AT 1, ENDS AT 30 (0x1E) 
+snake.asm(60).. 232: 6402
+ LD I, verticalline 
+snake.asm(62).. 234: A335
+ DRW V2, V4, 4 
+snake.asm(63).. 236: D244
+ DRW V3, V4, 4 
+snake.asm(64).. 238: D344
+ ADD V4, #04 
+snake.asm(65).. 23A: 7404
+ SE V4, #1E 
+snake.asm(66).. 23C: 341E
+ JP drwverticalline 
+snake.asm(67).. 23E: 1234
+ LD I, BCD 
+snake.asm(70).. 240: A342
+ LD V5, #00 
+snake.asm(71).. 242: 6500
+ LD B, V5 
+snake.asm(72).. 244: F533
+ CALL drwBCD 
+snake.asm(73).. 246: 230C
+ CALL drwball 
+snake.asm(75).. 248: 22F6
+ LD V8, #00   ; V8 IS ADDED TO I WHEN SAVING CURRENT (X, Y) COORDINATE OF HEAD  
+snake.asm(78).. 24A: 6800
+ LD V9, #00  ; V9 IS ADDED TO I TO GO TO CORRECT DIRECTION 
+snake.asm(80).. 24C: 6900
+ LD VE, #04  ; VE IS USED TO COMPARE V8 AND VE, IF (V8 == VE) THEN RESET V8 (V8=00) 
+snake.asm(81).. 24E: 6E04
+ LD V3, #06  ; SET DT = 06 
+snake.asm(83).. 250: 6306
+ LD DT, V3 
+snake.asm(84).. 252: F315
+ LD I, xcoordinate 
+snake.asm(86).. 254: A347
+ ADD I, V8 
+snake.asm(87).. 256: F81E
+ LD V0, [I]  ; SAVING PREVIOUS X COORDINATE OF HEAD IN V4 
+snake.asm(88).. 258: F065
+ LD V4, V0  ; AND CURRENT X COORDINATE OF HEAD IN [I] 
+snake.asm(89).. 25A: 8400
+ LD V0, VA 
+snake.asm(90).. 25C: 80A0
+ LD [I], V0 
+snake.asm(91).. 25E: F055
+ DW   #A468 
+snake.asm(94).. 260: A468
+ ADD I, V8 
+snake.asm(95).. 262: F81E
+ LD V0, [I]  ; SAVING PREVIOUS Y COORDINATE OF HEAD IN V1 
+snake.asm(96).. 264: F065
+ LD V1, V0  ; AND CURRENT Y COORDINATE OF HEAD IN [I] 
+snake.asm(97).. 266: 8100
+ LD V0, VB 
+snake.asm(98).. 268: 80B0
+ LD [I], V0 
+snake.asm(99).. 26A: F055
+ LD I, tail 
+snake.asm(101).. 26C: A33D
+ SE V4, #00   ; IF (V4 != 00)  
+snake.asm(102).. 26E: 3400
+ DRW V4, V1, 3  ;  DRW TAIL PREVIOUS HEAD LOCATION 
+snake.asm(103).. 270: D413
+ LD I, direction 
+snake.asm(105).. 272: A326
+ ADD I, V9  ; GO TO CORRECT DIRECTION 
+snake.asm(106).. 274: F91E
+ LD V1, [I]   ; STORE DISPLACEMENT IN V0 AND V1 
+snake.asm(107).. 276: F165
+ LD I, headtotail 
+snake.asm(109).. 278: A340
+ DRW VA, VB, 2  ; CONVERTING HEAD TO TAIL 
+snake.asm(110).. 27A: DAB2
+ ADD VA, V0 
+snake.asm(112).. 27C: 8A04
+ ADD VB, V1  ; DRW NEW HEAD IN NEW LOCATION 
+snake.asm(113).. 27E: 8B14
+ LD I, head 
+snake.asm(114).. 280: A33A
+ DRW VA, VB, 3 
+snake.asm(115).. 282: DAB3
+ SE VF, #00   ; IF NO COLLISION (NO BALL EATEN OR HIT BOUNDARY) BY THE MOVEMENT --> SKIP 
+snake.asm(117).. 284: 3F00
+ JP collision   ; ELSE --> DRW NEW BALL 
+snake.asm(118).. 286: 12C4
+ RND V0, #0F  ; IF (V0 IS ANYTHING BETWEEN 01 - 15) 
+snake.asm(122).. 288: C00F
+ SNE V0, #00  ;   SKIP 
+snake.asm(123).. 28A: 4000
+ ADD VE, #01  ; ELSE 
+snake.asm(124).. 28C: 7E01
+ ADD V8, #01  ; V8++ 
+snake.asm(127).. 28E: 7801
+ SNE V8, VE   ; IF (V8 == VE) THEN RESET V8 (V8=00) 
+snake.asm(128).. 290: 98E0
+ LD V8, #00 
+snake.asm(129).. 292: 6800
+ LD V1, #08   ; V1 = 08 
+snake.asm(133).. 294: 6108
+ SKP V1   ; IF (KEY WITH 08 IS PRESSED) 
+snake.asm(134).. 296: E19E
+ LD V6, #00   ;   V6 REMAINS SAME 
+snake.asm(135).. 298: 6600
+ SKP V1    ; ELSE 
+snake.asm(136).. 29A: E19E
+ JP nextdir   ;   V6 = 00 
+snake.asm(137).. 29C: 12A8
+ SE V6, #00   ; IF (KEY WITH 08 IS PRESSED) 
+snake.asm(138).. 29E: 3600
+ JP nextdir   ;   IF (V6 == 0)   ; if 08 was not pressed previously 
+snake.asm(139).. 2A0: 12A8
+ ADD V9, #02  ;    V9 += 02 
+snake.asm(140).. 2A2: 7902
+ LD V6, #06   ;    V6 = 06 
+snake.asm(141).. 2A4: 6606
+ AND V9, V6   ;    AND V9, V6 
+snake.asm(142).. 2A6: 8962
+ LD V1, #09 
+snake.asm(149).. 2A8: 6109
+ SKP V1 
+snake.asm(150).. 2AA: E19E
+ LD V7, #00 
+snake.asm(151).. 2AC: 6700
+ SKP V1 
+snake.asm(152).. 2AE: E19E
+ JP checkDT 
+snake.asm(153).. 2B0: 12BC
+ SE V7, #00 
+snake.asm(154).. 2B2: 3700
+ JP checkDT 
+snake.asm(155).. 2B4: 12BC
+ ADD V9, #FE 
+snake.asm(156).. 2B6: 79FE
+ LD V7, #06 
+snake.asm(157).. 2B8: 6706
+ AND V9, V7 
+snake.asm(158).. 2BA: 8972
+ LD V3, DT   ; IF (DT == 0) 
+snake.asm(161).. 2BC: F307
+ SE V3, #00   ;   JP moveloop 
+snake.asm(162).. 2BE: 3300
+ JP dirloop   ; ELSE 
+snake.asm(163).. 2C0: 1294
+ JP moveloop  ;   JP dirloop 
+snake.asm(164).. 2C2: 1250
+ CALL eraseball  ; DRW NEW BALL 
+snake.asm(168).. 2C4: 2306
+ LD I, head 
+snake.asm(170).. 2C6: A33A
+ DRW VA, VB, 3   
+snake.asm(171).. 2C8: DAB3
+ DRW VA, VB, 3 
+snake.asm(172).. 2CA: DAB3
+ SE VF, #00   ; IF (BALL IS EATEN) 
+snake.asm(174).. 2CC: 3F00
+ JP boundaryhit  ;   UPDATE SCORE 
+snake.asm(175).. 2CE: 12DE
+ LD V4, #02   ;   MAKE SOUND 
+snake.asm(177).. 2D0: 6402
+ LD ST, V4   ; ELSE --> BOUNDARY HIT 
+snake.asm(178).. 2D2: F418
+ ADD V5, #01  ;   MAKE SOUND 
+snake.asm(179).. 2D4: 7501
+ LD I, BCD   ;   DRW HEADTOTAIL 
+snake.asm(180).. 2D6: A342
+ LD B, V5   ;   DELAY 
+snake.asm(181).. 2D8: F533
+ CALL drwBCD  ;   START NEW GAME 
+snake.asm(182).. 2DA: 230C
+ JP ptrmovement 
+snake.asm(183).. 2DC: 128E
+ LD V4, #0A 
+snake.asm(186).. 2DE: 640A
+ LD ST, V4 
+snake.asm(187).. 2E0: F418
+ DRW VA, VB, 3 
+snake.asm(188).. 2E2: DAB3
+ SUB VA, V0 
+snake.asm(189).. 2E4: 8A05
+ SUB VB, V1 
+snake.asm(190).. 2E6: 8B15
+ LD I, headtotail 
+snake.asm(192).. 2E8: A340
+ DRW VA, VB, 2 
+snake.asm(193).. 2EA: DAB2
+ LD V0, #00 
+snake.asm(195).. 2EC: 6000
+ ADD V0, #01 
+snake.asm(197).. 2EE: 7001
+ SE V0, #0F 
+snake.asm(198).. 2F0: 300F
+ JP delay 
+snake.asm(199).. 2F2: 12EE
+ JP start 
+snake.asm(200).. 2F4: 1200
+ LD I, ball 
+snake.asm(203).. 2F6: A32E
+ RND VC, #36  ; MAX X - 54  
+snake.asm(205).. 2F8: CC36
+ ADD VC, #02  ; X RANGE: 2 - 56 
+snake.asm(206).. 2FA: 7C02
+ RND VD, #1B  ; MAX Y - 27  
+snake.asm(208).. 2FC: CD1B
+ ADD VD, #02  ; Y RANGE: 2 - 29 
+snake.asm(209).. 2FE: 7D02
+ DRW VC, VD, 7 
+snake.asm(211).. 300: DCD7
+ SNE VF, #00 
+snake.asm(212).. 302: 4F00
+ RET 
+snake.asm(213).. 304: 00EE
+ LD I, ball 
+snake.asm(216).. 306: A32E
+ DRW VC, VD, 7 
+snake.asm(217).. 308: DCD7
+ JP drwball 
+snake.asm(218).. 30A: 12F6
+ LD V3, #06  ; Y - 6 
+snake.asm(221).. 30C: 6306
+ LD V4, #3B  ; X - 59 
+snake.asm(222).. 30E: 643B
+ LD I, BCD 
+snake.asm(223).. 310: A342
+ LD V2, [I] 
+snake.asm(224).. 312: F265
+------------------------------------------------------------------------------
+Warning: Chip-48 spesific directive
+Associated file snake.asm line 226
+ LD F, V0 
+------------------------------------------------------------------------------
+ LD F, V0 
+snake.asm(226).. 314: F029
+ DRW V4, V3, 5 
+snake.asm(227).. 316: D435
+ ADD V3, #06 
+snake.asm(228).. 318: 7306
+------------------------------------------------------------------------------
+Warning: Chip-48 spesific directive
+Associated file snake.asm line 230
+ LD F, V1 
+------------------------------------------------------------------------------
+ LD F, V1 
+snake.asm(230).. 31A: F129
+ DRW V4, V3, 5 
+snake.asm(231).. 31C: D435
+ ADD V3, #06 
+snake.asm(232).. 31E: 7306
+------------------------------------------------------------------------------
+Warning: Chip-48 spesific directive
+Associated file snake.asm line 234
+ LD F, V2 
+------------------------------------------------------------------------------
+ LD F, V2 
+snake.asm(234).. 320: F229
+ DRW V4, V3, 5 
+snake.asm(235).. 322: D435
+ RET 
+snake.asm(237).. 324: 00EE
+  DW #0400   ; RIGHT --> X+4, Y+0 
+snake.asm(241).. 326: 0400
+  DW #00FC   ; UP --> X+0, Y-4 
+snake.asm(242).. 328: 00FC
+  DW #FC00   ; LEFT --> X-4, Y+0 
+snake.asm(243).. 32A: FC00
+  DW #0004   ; DOWN --> X+0, Y+4 
+snake.asm(244).. 32C: 0004
+    DB $..111...  
+snake.asm(247).. 32E: 38
+    DB $.11111.. 
+snake.asm(248).. 32F: 7C
+    DB $1111111. 
+snake.asm(249).. 330: FE
+    DB $1111111. 
+snake.asm(250).. 331: FE
+    DB $1111111. 
+snake.asm(251).. 332: FE
+    DB $.11111.. 
+snake.asm(252).. 333: 7C
+    DB $..111... 
+snake.asm(253).. 334: 38
+ DB $1....... 
+snake.asm(256).. 335: 80
+ DB $1....... 
+snake.asm(257).. 336: 80
+ DB $1....... 
+snake.asm(258).. 337: 80
+ DB $1....... 
+snake.asm(259).. 338: 80
+ DB $1111.... 
+snake.asm(263).. 339: F0
+ DB $111..... 
+snake.asm(266).. 33A: E0
+ DB $111..... 
+snake.asm(267).. 33B: E0
+ DB $111..... 
+snake.asm(268).. 33C: E0
+ DB $111..... 
+snake.asm(271).. 33D: E0
+    DB $1.1..... 
+snake.asm(272).. 33E: A0
+    DB $111..... 
+snake.asm(273).. 33F: E0
+ DB $........ 
+snake.asm(276).. 340: 00
+ DB $.1...... 
+snake.asm(277).. 341: 40
+ DA 'snake' 
+snake.asm(280).. 342: 736E616B65
+
+-----   *SYMBOLS*   -----
+
+32E BALL snake.asm(246)
+  snake.asm(203)
+  snake.asm(216)
+342 BCD snake.asm(279)
+  snake.asm(70)
+  snake.asm(180)
+  snake.asm(223)
+2DE BOUNDARYHIT snake.asm(185)
+  snake.asm(175)
+2BC CHECKDT snake.asm(160)
+  snake.asm(153)
+  snake.asm(155)
+2C4 COLLISION snake.asm(167)
+  snake.asm(118)
+2EE DELAY snake.asm(196)
+  snake.asm(199)
+326 DIRECTION snake.asm(240)
+  snake.asm(105)
+294 DIRLOOP snake.asm(132)
+  snake.asm(163)
+2F6 DRWBALL snake.asm(202)
+  snake.asm(75)
+  snake.asm(218)
+30C DRWBCD snake.asm(220)
+  snake.asm(73)
+  snake.asm(182)
+222 DRWHORIZONTALLINE snake.asm(49)
+  snake.asm(55)
+234 DRWVERTICALLINE snake.asm(61)
+  snake.asm(67)
+306 ERASEBALL snake.asm(215)
+  snake.asm(168)
+33A HEAD snake.asm(265)
+  snake.asm(40)
+  snake.asm(114)
+  snake.asm(170)
+340 HEADTOTAIL snake.asm(275)
+  snake.asm(109)
+  snake.asm(192)
+339 HORIZONTALLINE snake.asm(262)
+  snake.asm(50)
+250 MOVELOOP snake.asm(82)
+  snake.asm(164)
+2A8 NEXTDIR snake.asm(148)
+  snake.asm(137)
+  snake.asm(139)
+28E PTRMOVEMENT snake.asm(126)
+  snake.asm(183)
+20A REFRESHDISPLAYMEMORY snake.asm(31)
+  snake.asm(36)
+200 START snake.asm(24)
+  snake.asm(200)
+33D TAIL snake.asm(270)
+  snake.asm(101)
+335 VERTICALLINE snake.asm(255)
+  snake.asm(62)
+347 XCOORDINATE snake.asm(283)
+  snake.asm(27)
+  snake.asm(86)
+
+-----   *CONDITIONS*   -----
+
+UND ALIGNON
+UND CHIP48
+UND CHIP8
+UND HPASC
+UND HPHEAD
+DEF SCHIP10
+DEF SCHIP11
+UND USEDON
+UND USEDYES
+DEF XREFON
+DEF XREFYES
+
+Total number of warnings: 3

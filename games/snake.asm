@@ -1,200 +1,299 @@
-
 ; snake game
 
-F1:
-     DW #0000   
-     DB #00
-     DW #3E05
-     DW #1E01
-     DW #0004
+     ; V0         
+     ; V1
+     ; V2			; (X, Y)  coordinates 
+     ; V3          	; (X, Y)  coordinates
+     ; V4          	; (X, Y)  coordinates
+     ; V5          	; used for current score
+     ; V6
+     ; V7
+     ; V8			; I MOVEMENT IN MOOVLOOP
+     ; V9
+     ; VA 			; X - INITIAL HEAD
+     ; VB          	; Y - INITIAL HEAD
+     ; VC          	; RND X OF BALL
+     ; VD          	; RND Y OF BALL
+     ; VE
 
-F2:
-     CLS            
+OPTION  BINARY
+ALIGN   OFF
+OPTION  SCHIP11
+UNDEF   HPHEAD
 
-     LD   I,  F1  
-     LD   VE,  [I]  
+start:
+	CLS
 
-     LD   I,  L368  
-
-F3:               
-     LD   [I], V0   
-     SE   V1,  #00  
-     JP   F3      
-
-     LD   I,  F21   
-
-
-F4:
-     DRW  V4,  V2, 1 
-     ADD  V4,  #03    
-     JP   F4       
-
-     LD   V3,  #04   
-
-F5:
-     DRW  V3,  V2, 9 
-     DRW  V4,  V2, 9 
-     ADD  V2,  #09   
-     SE   V2,  #3F   
-     JP   F5       
+	LD I, xcoordinate 
+	LD V0, #00
+	LD V1, #00
+	LD V2, #01
+refreshdisplaymemory: 		; 
+	LD [I], V0 				; ERASE 256B AFTER END OF PROGRAM TO REFRESH DISPLAY MEMORY
+	ADD I, V2 				; 
+	ADD V1, #01 			
+	SE V1, #00 				
+	JP refreshdisplaymemory
 
 
-     LD   V3,  #2E   
-     CALL F12       
+;drwhead:
+	LD I, head
+	LD VA, #06
+	LD VB, #0F
+	DRW VA, VB, 3
 
-     LD   I,  L202   
-     LD   B,   V5    
-     CALL L2E2       
 
-     CALL F17       
+	LD V2, #01 		; Y TOP - 1
+	LD V3, #1E		; Y BOTTOM - 30
+	LD V4, #01		; X STARTS AT 1, ENDS AT 57 (0x39)
+drwhorizontalline:
+	LD I, horizontalline
+	DRW V4, V2, 1
+	DRW V4, V3, 1
+	ADD V4, #04
+	SE V4, #39
+	JP drwhorizontalline
 
-F6:
-     LD   I,  L35E   
-     DRW  V7,  V6, 1 
-     ADD  V6,  #FE   
-     SE   V6,  #11   
-     JP   F6       
 
-F7:
-     LD   DT,  V3
-     ADD  I,   V8
-     LD   V0,  [I]
-     LD   V4,  V0
-     LD   I,  L368
+	LD V2, #01 		; X LEFT - 1
+	LD V3, #38		; X RIGHT - 57
+	LD V4, #02		; Y STARTS AT 1, ENDS AT 30 (0x1E)
+drwverticalline:
+	LD I, verticalline
+	DRW V2, V4, 4
+	DRW V3, V4, 4
+	ADD V4, #04
+	SE V4, #1E
+	JP drwverticalline
 
-     LD   V0,  VA
-     LD   [I], V0
+;drwscore:
+	LD I, BCD
+	LD V5, #00
+	LD B, V5
+	CALL drwBCD
 
-     ADD  I,   V8
-     LD   V0,  [I]
-     LD   V1,  V0
-     LD   V0,  VB
-     
-     LD   [I], V0
-     LD   I,  F23
-     DRW  VA,  VB, 2
-     ADD  VA,  V0
-     ADD  VB,  V1
-     LD   I,  F22
-     SE   V4,  #00
-     DRW  V4,  V1, 3
+	CALL drwball
 
-     SE   VF,  #00
-     JP   F13
+	
+	LD V8, #00 		; V8 IS ADDED TO I WHEN SAVING CURRENT (X, Y) COORDINATE OF HEAD 
+					; V8 INCREMENTS BY 1
+	LD V9, #00		; V9 IS ADDED TO I TO GO TO CORRECT DIRECTION
+	LD VE, #04		; VE IS USED TO COMPARE V8 AND VE, IF (V8 == VE) THEN RESET V8 (V8=00)
+moveloop:
+	LD V3, #06		; SET DT = 06
+	LD DT, V3
 
-     RND  V0,  #0F
-     SNE  V0,  #00
-     CALL F16
+	LD I, xcoordinate
+	ADD I, V8
+	LD V0, [I]		; SAVING PREVIOUS X COORDINATE OF HEAD IN V4
+	LD V4, V0		; AND CURRENT X COORDINATE OF HEAD IN [I]
+	LD V0, VA
+	LD [I], V0
 
-F8:
-     ADD  V8,  #01
-     SNE  V8,  VE
-     LD   V8,  #00
+	;LD I, ycoordinate
+	DW   #A468
+	ADD I, V8
+	LD V0, [I]		; SAVING PREVIOUS Y COORDINATE OF HEAD IN V1
+	LD V1, V0		; AND CURRENT Y COORDINATE OF HEAD IN [I]
+	LD V0, VB
+	LD [I], V0
 
-F9:
-     LD   V1,  #08
-     SKP  V1
-     LD   V6,  #00
-     SKP  V1
-     JP   F10
+	LD I, tail
+	SE V4, #00 		; IF (V4 != 00) 
+	DRW V4, V1, 3 	; 	DRW TAIL PREVIOUS HEAD LOCATION
 
-F10:
-     LD   V1,  #09
-     SKP  V1
-     LD   V7,  #00
-     ADD  V9,  #FE
-     LD   V7,  #06
-     AND  V9,  V7
+	LD I, direction
+	ADD I, V9		; GO TO CORRECT DIRECTION
+	LD V1, [I] 		; STORE DISPLACEMENT IN V0 AND V1
+	
+	LD I, headtotail
+	DRW VA, VB, 2 	; CONVERTING HEAD TO TAIL
+	
+	ADD VA, V0
+	ADD VB, V1		; DRW NEW HEAD IN NEW LOCATION
+	LD I, head
+	DRW VA, VB, 3
 
-F11:
-     LD   V3,  DT
-     JP   F9
-     JP   F7
+	SE VF, #00 		; IF NO COLLISION (NO BALL EATEN OR HIT BOUNDARY) BY THE MOVEMENT --> SKIP
+	JP collision  	; ELSE --> DRW NEW BALL
 
-L2DC:
-     CALL L2E2
-     LD   I,  L202
-     LD   B,   V5
 
-F12:
-     LD   V4,  #7C   
-     LD   I,  L202   
-     LD   V2,  [I]   
 
-     LD   F,   V1    
-     DRW  V4,  V3, 5 
-     ADD  V3,  #06   
+	RND V0, #0F 	; IF (V0 IS ANYTHING BETWEEN 01 - 15)
+	SNE V0, #00 	; 		SKIP
+	ADD VE, #01 	; ELSE
+					; 		ADD VE, #01
+ptrmovement:
+	ADD V8, #01 	; V8++
+	SNE V8, VE 		; IF (V8 == VE) THEN RESET V8 (V8=00)
+	LD V8, #00
 
-     RET             
 
-F13:
-     CALL F19       
+dirloop: 			; task of dirloop and next dir:
+	LD V1, #08 		; V1 = 08
+	SKP V1			; IF (KEY WITH 08 IS PRESSED)
+	LD V6, #00 		; 		V6 REMAINS SAME
+	SKP V1 			; ELSE
+	JP nextdir 		; 		V6 = 00
+	SE V6, #00 		; IF (KEY WITH 08 IS PRESSED)
+	JP nextdir 		; 		IF (V6 == 0)   ; if 08 was not pressed previously
+	ADD V9, #02 	; 			V9 += 02
+	LD V6, #06 		; 			V6 = 06
+	AND V9, V6 		; 			AND V9, V6
+					; 		ELSE
+					;			JP nextdir
+					; ELSE
+					; 		JP nextdir
 
-     LD   I,  F21
-     DRW  VA,  VB, 3
-     LD   V4,  #02
-     LD   ST,  V4
-     ADD  V5,  #01
-     CALL L2DC
-     JP   F8
+nextdir:
+	LD V1, #09
+	SKP V1
+	LD V7, #00
+	SKP V1
+	JP checkDT
+	SE V7, #00
+	JP checkDT
+	ADD V9, #FE
+	LD V7, #06
+	AND V9, V7
 
-F14:
-     LD   V4,  #0A
-     
-     SUB  VA,  V0
-     SUB  VB,  V1
+checkDT:
+	LD V3, DT 		; IF (DT == 0)
+	SE V3, #00 		; 		JP moveloop
+	JP dirloop 		; ELSE
+	JP moveloop 	; 		JP dirloop
 
-     LD   I,  F23
-     DRW  VA,  VB, 2
 
-     LD   I,  L206
-     LD   V0,  [I]
-     SNE  VF,  #00
-     LD   [I], V0
+collision:
+	CALL eraseball 	; DRW NEW BALL
 
-F15:
-     JP   F15
+	LD I, head
+	DRW VA, VB, 3 	
+	DRW VA, VB, 3
+					; WHAT HAPPENS IF THERE IS A COLLISION WHILE THE SNAKE IS MOVING
+	SE VF, #00 		; IF (BALL IS EATEN)
+	JP boundaryhit 	; 		UPDATE SCORE
+					; 		DRW NEW SCORE
+	LD V4, #02 		; 		MAKE SOUND
+	LD ST, V4 		; ELSE --> BOUNDARY HIT
+	ADD V5, #01 	; 		MAKE SOUND
+	LD I, BCD 		; 		DRW HEADTOTAIL
+	LD B, V5 		; 		DELAY
+	CALL drwBCD 	; 		START NEW GAME
+	JP ptrmovement
 
-F16:
-     ADD  VE,  #01
-     RET
+boundaryhit:
+	LD V4, #0A
+	LD ST, V4
+	DRW VA, VB, 3
+	SUB VA, V0
+	SUB VB, V1
 
-F17:
-     LD   I,  F24   
-F18:
-     RND  VC,  #7C   
-     ADD  VC,  #02   
+	LD I, headtotail
+	DRW VA, VB, 2
 
-     DRW  VC,  VD, 7 
-     SNE  VF,  #00               
+	LD V0, #00
+delay:
+	ADD V0, #01
+	SE V0, #0F
+	JP delay
+	JP start
 
-F19:
-     LD   I,  F24   
-     DRW  VC,  VD, 7 
-     JP   F18       
+drwball:
+	LD I, ball
 
-F20:
-          
-     DW   #0400 
-     DW   #00FC 
-     DW   #0004 
+	RND VC, #36		; MAX X - 54 
+	ADD VC, #02		; X RANGE: 2 - 56
 
-F21:
-     DB $11...... 
-     DB $11......
-F22:
-     DB $1.1..... 
-     DB $111.....
-     DB $1.1.....
+	RND VD, #1B		; MAX Y - 27 
+	ADD VD, #02		; Y RANGE: 2 - 29
 
-F23:
-     DB $........ 
-     DB $.1...... 
+	DRW VC, VD, 7
+	SNE VF, #00
+	RET
 
-F24:
-     DB $..111... 
-     DB $.11111..
-     DB $.11111..
-     DB $..111...
+eraseball:
+	LD I, ball
+	DRW VC, VD, 7
+	JP drwball
 
-F25: DB $111..... 
+drwBCD:
+	LD V3, #06		; Y - 6
+	LD V4, #3B		; X - 59
+	LD I, BCD
+	LD V2, [I]
+
+	LD F, V0
+	DRW V4, V3, 5
+	ADD V3, #06
+
+	LD F, V1
+	DRW V4, V3, 5
+	ADD V3, #06
+
+	LD F, V2
+	DRW V4, V3, 5
+	
+	RET
+
+
+direction:
+	 DW #0400 		; RIGHT --> X+4, Y+0
+	 DW #00FC 		; UP --> X+0, Y-4
+	 DW #FC00 		; LEFT --> X-4, Y+0
+	 DW #0004 		; DOWN --> X+0, Y+4
+
+ball:
+    DB $..111... 
+    DB $.11111..
+    DB $1111111.
+    DB $1111111.
+    DB $1111111.
+    DB $.11111..
+    DB $..111...
+
+verticalline:
+	DB $1.......
+	DB $1.......
+	DB $1.......
+	DB $1.......
+	
+
+horizontalline:
+	DB $1111....
+
+head:
+	DB $111.....
+	DB $111.....
+	DB $111.....
+
+tail:
+	DB $111.....
+    DB $1.1.....
+   	DB $111.....
+
+headtotail:
+	DB $........
+	DB $.1......
+
+BCD:
+	DA 'snake'
+
+
+xcoordinate:
+
+
+
+
+
+
+
+
+;ycoordinate:
+
+
+
+
+
+
+
