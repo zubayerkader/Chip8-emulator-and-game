@@ -80,6 +80,24 @@ Chip8.prototype.run = function() {
 	
 }
 
+Chip8.prototype.setKey = function(key) {
+	var KTKcode = {
+		49: 0x1, 50: 0x2, 51: 0x3, 52: 0x4, 81: 0x5, 87: 0x6, 69: 0x7,  
+	    82: 0x8, 65: 0x9, 83: 0xA, 68: 0xB, 70: 0xC,  
+	    90: 0xD, 88: 0xE, 67: 0xF, 86: 0x10  
+	};
+	this.keys[KTKcode] = true; 
+}
+
+Chip8.prototype.unsetKey = function(key) {
+	var KTKcode = {
+		49: 0x1, 50: 0x2, 51: 0x3, 52: 0x4, 81: 0x5, 87: 0x6, 69: 0x7,  
+	    82: 0x8, 65: 0x9, 83: 0xA, 68: 0xB, 70: 0xC,  
+	    90: 0xD, 88: 0xE, 67: 0xF, 86: 0x10  
+	};
+	delete this.keys[KTKcode];
+} 
+
 Chip8.prototype.stop = function() {
 	this.running = false;
 }

@@ -52,6 +52,13 @@ function drawPointers () {
     pcrender.printToCanvas();
 }
 
+function keyPress () {
+    document.addEventListener("keypress", function(event){chip8.setkey});
+}
+function keyLetgo () {
+    document.addEventListener("keyup", function(event){chip8.unsetkey});
+}
+
 function update() {
     clearDisplay();
     clearReg();
@@ -61,6 +68,8 @@ function update() {
     drawReg();
     updatePointers();
     drawPointers();
+    keyPress();
+    keyLetgo();
 }
 
 
