@@ -451,6 +451,21 @@ Chip8.prototype.emulateCycle = function () {
 			// need to be made after sprite is constructed
 			return;
 		}
+		//opcode Fx33
+		//stores the decimal representation of Vx, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2
+		if (opcon12 == 0x0033)
+		{
+			var x = (opcode & 0x0F00) >> 8;
+			var one = v[x];
+			var hundred = (one - (one % 100)) / 100;
+			one -= hundred * 100;
+			var ten = (one - (one % 10) / 10);
+			one -= ten * 10;
+			this.memory[i] = hundred;
+			this.memory[i+1] = ten;
+			this.memory[i+2] = one;
+			return;
+		}
 		//opcode Fx55
 		// store registers V[0] through V[x] into memory from address ip
 		if (opconl2 == 0x0055) {
