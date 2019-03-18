@@ -1,2 +1,4 @@
 1. Reset needs to reload program along with after clearing the memory (solved)
-2. 
+2. Top wall of snake game doesnt reset player
+3. some hex numbers do not display properly (solved)
+
