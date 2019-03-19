@@ -8,13 +8,14 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     // The Uint8Array(unsigned 8 bit in array) allows us to see only 8 bits at a time.
     // ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays
     this.memory = new Uint8Array(arraybuffer);
-
+	memoryLength = memory.length;
     // Chip8 has 16 8 bit data registers. 
 	arraybuffer = new ArrayBuffer(16);
 
     // registers named from 0 to 15.
     // The last register is the carry flag
-    this.v = new Uint8Array(arraybuffer); 
+	this.v = new Uint8Array(arraybuffer); 
+	this.vLength = v.length;
     this.stack = new Uint8Array(arraybuffer);// For insturctions
     this.i = null; //Register I. The sprite pointer.
     this.sp = null; //Stack Pointer
@@ -22,6 +23,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.delaytimer = null;
     this.soundtimer = null;
 	this.display = new Array(64*32);
+	this.displayLength = display.length;
 	this.running = false;
 	this.keys = {};
 	var memhex = [0xF0,0x90,0x90,0x90,0xF0, 0x20,0x60,0x20,0x20,0x70, 0xF0,0x10,0xF0,0x80,0xF0, 0xF0,0x10,0xF0,0x10,0xF0, 0x90,0x90,0xF0,0x10,0x10, 0xF0,0x80,0xF0,0x10,0xF0,
@@ -166,15 +168,15 @@ Chip8.prototype.reset = function() {
 	this.pc = 0x200;
 	this.running = false;
 
-	for (let i = 0; i < this.display.length; i++) {
+	for (let i = 0; i < this.displayLength; i++) {
 		this.display[i] = 0;
 	}
 
-	for (let i = 0; i < this.v.length; i++) {
+	for (let i = 0; i < this.vLength; i++) {
 		this.v[i] = 0;
 	}
 
-	for (let i = 0x200; i < this.memory.length; i++) {
+	for (let i = 0x200; i < this.memoryLength; i++) {
 		this.memory[i] = 0;
 	}
 	try {
@@ -182,7 +184,7 @@ Chip8.prototype.reset = function() {
 	} catch {
 	}
 
-	update();
+	// update();
 	return this
 	//tba
 }
@@ -451,6 +453,22 @@ Chip8.prototype.emulateCycle = function () {
 			// need to be made after sprite is constructed
 			return;
 		}
+		//opcode Fx33
+		//stores the decimal representation of Vx, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2
+		if (opcon12 == 0x0033)
+		{
+			var x = (opcode & 0x0F00) >> 8;
+			var one = v[x];
+			var hundred = (one - (one % 100)) / 100;
+			one -= hundred * 100;
+			var ten = (one - (one % 10) / 10);
+			one -= ten * 10;
+			this.memory[i] = hundred;
+			this.memory[i+1] = ten;
+			this.memory[i+2] = one;
+			return;
+		}
+
 		//opcode Fx55
 		// store registers V[0] through V[x] into memory from address ip
 		if (opconl2 == 0x0055) {

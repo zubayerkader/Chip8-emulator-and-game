@@ -17,6 +17,7 @@ test("Testing Initial Conditions", () => {
     expect(chip8.stack).toHaveLength(16);
     expect(chip8.display).toBeInstanceOf(Array);
     expect(chip8.display).toHaveLength(64 * 32);
+    expect(chip8.running).toEqual(false);
 });
 
 test("Test reset function. Sets all values to 0", () => {
@@ -26,6 +27,16 @@ test("Test reset function. Sets all values to 0", () => {
     expect(resetTest.pc).toEqual(0x200);
     expect(resetTest.delaytimer).toEqual(0);
     expect(resetTest.soundtimer).toEqual(0);
+    expect(resetTest.running).toEqual(false);
+    for (let i = 0; i < resetTest.displayLength; i++) {
+      expect(resetTest.display[i]).toEqual(0);
+    }
+    for (let i = 0; i < resetTest.vLength; i++) {
+      expect(resetTest.v[i]).toEqual(0);
+    }
+    for (let i = 0x200; i < resetTest.memoryLength; i++) {
+      expect(resetTest.memory[i]).toEqual(0);
+    }
 });
 
 test("Test setI function. Set i to memory location", () => {
