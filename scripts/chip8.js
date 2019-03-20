@@ -88,7 +88,8 @@ Chip8.prototype.setKey = function(key) {
 	    82: 0x8, 65: 0x9, 83: 0xA, 68: 0xB, 70: 0xC,  
 	    90: 0xD, 88: 0xE, 67: 0xF, 86: 0x10  
 	};
-	this.keys[KTKcode] = true; 
+	this.keys[KTKcode] = true;
+	return this;
 }
 
 Chip8.prototype.unsetKey = function(key) {
@@ -102,6 +103,7 @@ Chip8.prototype.unsetKey = function(key) {
 
 Chip8.prototype.stop = function() {
 	this.running = false;
+	return this;
 }
 
 Chip8.prototype.setI = function(memLocation) { // set I
@@ -123,7 +125,7 @@ Chip8.prototype.getSP = function() {
 }
 
 
-Chip8.prototype.setV = function(rnum,vnum){ // Set specific register
+Chip8.prototype.setV = function(rnum, vnum){ // Set specific register
     this.v[rnum]=vnum;
     return this;
 }
@@ -155,7 +157,8 @@ Chip8.prototype.getSound = function() {
 Chip8.prototype.setDisplay = function() { //set display to black
     for (var i = 0; i < 64*32; i++) {
     	this.display[i]=0;
-    }
+	}
+
 }
 
 
