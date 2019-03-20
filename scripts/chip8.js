@@ -29,8 +29,9 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 	var memhex = [0xF0,0x90,0x90,0x90,0xF0, 0x20,0x60,0x20,0x20,0x70, 0xF0,0x10,0xF0,0x80,0xF0, 0xF0,0x10,0xF0,0x10,0xF0, 0x90,0x90,0xF0,0x10,0x10, 0xF0,0x80,0xF0,0x10,0xF0,
 	0xF0,0x80,0xF0,0x90,0xF0, 0xF0,0x10,0x20,0x40,0x40, 0xF0,0x90,0xF0,0x90,0xF0, 0xF0,0x90,0xF0,0x10,0xF0, 0xF0,0x90,0xF0,0x90,0x90, 0xE0,0x90,0xE0,0x90,0xE0, 0xF0,0x80,0x80,0x80,0xF0, 
 	0xE0,0x90,0x90,0x90,0xE0, 0xF0,0x80,0xF0,0x80,0xF0, 0xF0,0x80,0xF0,0x80,0x80]
-	for(let i = 0; i < memhex.length; i++){
+	for(let i = 0; i < 80; i++){
 		this.memory[i] = memhex[i];
+		
 	}
 
     return this;
@@ -88,7 +89,8 @@ Chip8.prototype.setKey = function(key) {
 	    82: 0x8, 65: 0x9, 83: 0xA, 68: 0xB, 70: 0xC,  
 	    90: 0xD, 88: 0xE, 67: 0xF, 86: 0x10  
 	};
-	this.keys[KTKcode] = true;
+	var Kc = KTKcode[key];
+	this.keys[Kc] = true; 
 	return this;
 }
 
@@ -98,7 +100,8 @@ Chip8.prototype.unsetKey = function(key) {
 	    82: 0x8, 65: 0x9, 83: 0xA, 68: 0xB, 70: 0xC,  
 	    90: 0xD, 88: 0xE, 67: 0xF, 86: 0x10  
 	};
-	delete this.keys[KTKcode];
+	var Kc = KTKcode[key];
+	delete this.keys[Kc];
 } 
 
 Chip8.prototype.stop = function() {
@@ -429,6 +432,8 @@ Chip8.prototype.emulateCycle = function () {
 
 		//opcode Fx0A need to be made after input codes
 		if(opconl2 == 0x000A){
+			this.stop;
+
 			//need to be made after input codes are written
 			return;
 		}
@@ -458,10 +463,10 @@ Chip8.prototype.emulateCycle = function () {
 		}
 		//opcode Fx33
 		//stores the decimal representation of Vx, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2
-		if (opcon12 == 0x0033)
+		if (opconl2 == 0x0033)
 		{
 			var x = (opcode & 0x0F00) >> 8;
-			var one = v[x];
+			var one = this.v[x];
 			var hundred = (one - (one % 100)) / 100;
 			one -= hundred * 100;
 			var ten = (one - (one % 10) / 10);
@@ -471,7 +476,6 @@ Chip8.prototype.emulateCycle = function () {
 			this.memory[i+2] = one;
 			return;
 		}
-
 		//opcode Fx55
 		// store registers V[0] through V[x] into memory from address ip
 		if (opconl2 == 0x0055) {

@@ -53,10 +53,10 @@ function drawPointers () {
 }
 
 function keyPress () {
-    document.addEventListener("keypress", function(event){chip8.setkey});
+    document.addEventListener("keydown", function(event){chip8.setKey(event.keyCode)});
 }
 function keyLetgo () {
-    document.addEventListener("keyup", function(event){chip8.unsetkey});
+    document.addEventListener("keyup", function(event){chip8.unsetKey(event.keyCode)});
 }
 
 function update() {
