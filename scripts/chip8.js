@@ -286,7 +286,6 @@ Chip8.prototype.reset = function() {
 
 Chip8.prototype.step = function () {
 	if (!this.running) {
-		console.log("inside if")
 		this.emulateCycle();
 		update();
 	}
@@ -301,6 +300,8 @@ Chip8.prototype.emulateCycle = function () {
 	var opconl2 = opcode & 0x00FF;
 	var opconl3 = opcode & 0x0FFF; 
 	this.pc = this.pc + 2;
+
+	console.log(opcode.toString(16));
 	if(this.pc >= 4096){
 		return;
 	}
@@ -317,6 +318,7 @@ Chip8.prototype.emulateCycle = function () {
 		//opcode 00EE:
 		//Returns form the subroutine setting the program counter to the top of the stack
 		if(opend == 0xE){
+			console.log("ret")
 			this.sp = this.sp-1;
 			this.pc = this.stack[this.sp]
 			return;
@@ -325,6 +327,7 @@ Chip8.prototype.emulateCycle = function () {
 	//opcode 1NNN:
 	//Jumps to location NNN by setting the program counter
 	if (opno == 0x1000){
+		console.log("jp to ");
 		this.pc = opconl3;
 		return;
 	}
@@ -486,10 +489,10 @@ Chip8.prototype.emulateCycle = function () {
 			index = this.memory[this.i + i]; // Sprite location. One byte at a time.
 			for (var dx = 0; dx < 8; dx++) {
 				if ((index&0x80) > 0) { // 0x80 = 10000000
-					if (this.display[64 * ((this.v[x]+i)%32) + ((this.v[y]+dx)%64)] == 1) {
+					if (this.display[64 * ((this.v[y]+i)%32) + ((this.v[x]+dx)%64)] == 1) {
 						this.v[0xF] = 1;
 					}
-					this.display[64 * ((this.v[x]+i)%32) + ((this.v[y]+dx)%64)] ^= 1; // if pixel on display is 0 than set that pixel to 1 (0 XOR 1 = 1).
+					this.display[64 * ((this.v[y]+i)%32) + ((this.v[x]+dx)%64)] ^= 1; // if pixel on display is 0 than set that pixel to 1 (0 XOR 1 = 1).
 				}
 				index = index << 1; // e.g. 1001 0101 = 0010 1010 & 1000 0000 fetches first MSB
 			}
@@ -573,15 +576,18 @@ Chip8.prototype.emulateCycle = function () {
 		if (opconl2 == 0x0055) {
 			for (var i = 0; i<= x; i++){
 				this.memory[this.i + i] = this.v[i];
+				
 			}
+			this.i = this.i + x + 1;
 			return;
 		}
 		//opcode Fx65
 		//read the registers V[0] through V[x] from memory starting at address ip
 		if (opconl2 == 0x0065) {
 			for (var i = 0; i<=x; i++){
-			this.memory[this.i + i] = this.v[i];
-			}		
+				this.v[i] = this.memory[this.i+i];
+			}
+			this.i = this.i + x + 1;	
 		}
 	}
 	
