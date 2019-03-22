@@ -8,14 +8,14 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     // The Uint8Array(unsigned 8 bit in array) allows us to see only 8 bits at a time.
     // ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays
     this.memory = new Uint8Array(arraybuffer);
-	memoryLength = memory.length;
+	memoryLength = this.memory.length;
     // Chip8 has 16 8 bit data registers. 
 	arraybuffer = new ArrayBuffer(16);
 
     // registers named from 0 to 15.
     // The last register is the carry flag
 	this.v = new Uint8Array(arraybuffer); 
-	this.vLength = v.length;
+	this.vLength = this.v.length;
     this.stack = new Uint8Array(arraybuffer);// For insturctions
     this.i = null; //Register I. The sprite pointer.
     this.sp = null; //Stack Pointer
@@ -23,7 +23,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     this.delaytimer = null;
     this.soundtimer = null;
 	this.display = new Array(64*32);
-	this.displayLength = display.length;
+	this.displayLength = this.display.length;
 	this.running = false;
 	this.keys = new Array(16);
 	var memhex = [0xF0,0x90,0x90,0x90,0xF0, 0x20,0x60,0x20,0x20,0x70, 0xF0,0x10,0xF0,0x80,0xF0, 0xF0,0x10,0xF0,0x10,0xF0, 0x90,0x90,0xF0,0x10,0x10, 0xF0,0x80,0xF0,0x10,0xF0,
@@ -191,14 +191,16 @@ Chip8.prototype.reset = function() {
 	} catch {
 	}
 
-	// update();
+	update();
 	return this
 	//tba
 }
 
 Chip8.prototype.step = function () {
 	if (!this.running) {
+		console.log("inside if")
 		this.emulateCycle();
+		update();
 	}
 }
 
@@ -218,10 +220,11 @@ Chip8.prototype.emulateCycle = function () {
 		//opode 00E0: 
 		//Clears the display
 		if(opend == 0x0){
+			console.log("cls")
 			for (var i = 0; i<64*32; i++){
 				this.display[i]=0;
-				return;
 			}
+			return;
 		}
 		//opcode 00EE:
 		//Returns form the subroutine setting the program counter to the top of the stack
@@ -234,7 +237,7 @@ Chip8.prototype.emulateCycle = function () {
 	//opcode 1NNN:
 	//Jumps to location NNN by setting the program counter
 	if (opno == 0x1000){
-		this.pc == opconl3;
+		this.pc = opconl3;
 		return;
 	}
 	//opcode 2NNN:
@@ -493,7 +496,7 @@ Chip8.prototype.emulateCycle = function () {
 			}		
 		}
 	}
-
+	
 	return;
 	//insert error code if opcode is not recognized
 	

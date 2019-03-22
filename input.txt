@@ -1,5 +1,3 @@
-ldl v1
-ldr v1
-ldv v1
-ldm v1
-addi v1
+drw v1, v2, 0x5
+cls
+jp 0x200
