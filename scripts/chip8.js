@@ -84,7 +84,6 @@ Chip8.prototype.run = function() {
 }
 
 Chip8.prototype.setKey = function(keyCode) {
-
 	var key;
 	if(keyCode == 49){
 		key = 0x1;
@@ -528,7 +527,17 @@ Chip8.prototype.emulateCycle = function () {
 		//opcode Fx0A need to be made after input codes
 		if(opconl2 == 0x000A){
 			this.stop;
-
+			var pressed = 0; 
+			var keysclone = Array.from(this.keys);
+			while(pressed == 0){
+				for (var i = 0; i < 16; i++){
+					if(keysclone[i] != this.keys[i]){
+						pressed = i;
+					}
+				}
+			}
+			this.v[x] = pressed;
+			this.run;
 			//need to be made after input codes are written
 			return;
 		}
@@ -553,6 +562,7 @@ Chip8.prototype.emulateCycle = function () {
 		//opcode Fx29
 		//Set I = the location of the sprite for digit V[x]
 		if (opconl2 == 0x0029) {
+			this.i = this.v[x] * 5;
 			// need to be made after sprite is constructed
 			return;
 		}
