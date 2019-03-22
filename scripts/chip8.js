@@ -83,26 +83,114 @@ Chip8.prototype.run = function() {
 	
 }
 
-Chip8.prototype.setKey = function(key) {
-	var KTKcode = { // to be changed to if statements
-		49: 0x1, 50: 0x2, 51: 0x3, 52: 0xC, 81: 0x4, 87: 0x5, 69: 0x6,  
-	    82: 0xD, 65: 0x7, 83: 0x8, 68: 0x9, 70: 0xE,  
-	    90: 0xA, 88: 0x0, 67: 0xB, 86: 0xF  
+Chip8.prototype.setKey = function(keyCode) {
+
+	var key;
+	if(keyCode == 49){
+		key = 0x1;
+	};
+	if(keyCode == 50){
+		key = 0x2;
+	};
+	if(keyCode == 51){
+		key = 0x3;
+	};
+	if(keyCode == 52){
+		key = 0xC;
+	};
+	if(keyCode == 81){
+		key = 0x4;
+	};
+	if(keyCode == 87){
+		key = 0x5;
+	};
+	if(keyCode == 69){
+		key = 0x6;
+	};
+	if(keyCode == 82){
+		key = 0xD;
+	};
+	if(keyCode == 65){
+		key = 0x7;
+	};
+	if(keyCode == 83){
+		key = 0x8;
+	};
+	if(keyCode == 68){
+		key = 0x9;
+	};
+	if(keyCode == 70){
+		key = 0xE;
+	};
+	if(keyCode == 90){
+		key = 0xA;
+	};
+	if(keyCode == 88){
+		key = 0x0
+	};
+	if(keyCode == 67){
+		key = 0xB;
+	};
+	if(keyCode == 86){
+		key = 0xF;
 	};
 
-	var Kc = KTKcode[key];
-	this.keys[Kc] = 1; 
+	this.keys[key] = 1; 
 	return this;
 }
 
-Chip8.prototype.unsetKey = function(key) {
-	var KTKcode = {
-		49: 0x1, 50: 0x2, 51: 0x3, 52: 0xC, 81: 0x4, 87: 0x5, 69: 0x6,  
-	    82: 0xD, 65: 0x7, 83: 0x8, 68: 0x9, 70: 0xE,  
-	    90: 0xA, 88: 0x0, 67: 0xB, 86: 0xF  
+Chip8.prototype.unsetKey = function(keyCode) {
+	var key;
+	if(keyCode == 49){
+		key = 0x1;
 	};
-	var Kc = KTKcode[key];
-	this.keys[Kc] = 0;
+	if(keyCode == 50){
+		key = 0x2;
+	};
+	if(keyCode == 51){
+		key = 0x3;
+	};
+	if(keyCode == 52){
+		key = 0xC;
+	};
+	if(keyCode == 81){
+		key = 0x4;
+	};
+	if(keyCode == 87){
+		key = 0x5;
+	};
+	if(keyCode == 69){
+		key = 0x6;
+	};
+	if(keyCode == 82){
+		key = 0xD;
+	};
+	if(keyCode == 65){
+		key = 0x7;
+	};
+	if(keyCode == 83){
+		key = 0x8;
+	};
+	if(keyCode == 68){
+		key = 0x9;
+	};
+	if(keyCode == 70){
+		key = 0xE;
+	};
+	if(keyCode == 90){
+		key = 0xA;
+	};
+	if(keyCode == 88){
+		key = 0x0
+	};
+	if(keyCode == 67){
+		key = 0xB;
+	};
+	if(keyCode == 86){
+		key = 0xF;
+	};
+
+	this.keys[key] = 0;
 } 
 
 Chip8.prototype.stop = function() {

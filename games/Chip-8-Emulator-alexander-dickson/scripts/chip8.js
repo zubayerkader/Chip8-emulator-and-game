@@ -472,22 +472,7 @@ var Chip8 = function () {
                      // LD Vx, K
                      // Fx0A
                      // Wait for keypress, then store it in Vx.
-                     case 0x000A:
-
-                         var oldKeyDown = this.setKey;
-                         var self = this;
-
-                         this.setKey = function(key) {
-                            self.v[x] = key;
-
-                            self.setKey = oldKeyDown.bind(self);
-                            self.setKey.apply(self, arguments);
-
-                            self.start();
-                         }
-
-                         this.stop();
-                         return;
+                     
 
                      // LD DT, Vx
                      // Fx15
