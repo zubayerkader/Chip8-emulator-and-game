@@ -52,12 +52,12 @@ function drawPointers () {
     pcrender.printToCanvas();
 }
 
-function keyPress () {
-    document.addEventListener("keydown", function(event){chip8.setKey(event.keyCode)});
-}
-function keyLetgo () {
-    document.addEventListener("keyup", function(event){chip8.unsetKey(event.keyCode)});
-}
+//function keyPress () {
+//    document.addEventListener("keydown", function(event){chip8.setKey(event.keyCode)});
+//}
+//function keyLetgo () {
+//    document.addEventListener("keyup", function(event){chip8.unsetKey(event.keyCode)});
+//}
 
 function update() {
     clearDisplay();
@@ -68,8 +68,8 @@ function update() {
     drawReg();
     updatePointers();
     drawPointers();
-    keyPress();
-    keyLetgo();
+    //keyPress();
+    //keyLetgo();
 }
 
 

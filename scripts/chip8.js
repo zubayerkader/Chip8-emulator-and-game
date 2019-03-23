@@ -25,7 +25,6 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 	this.display = new Array(64*32);
 	this.displayLength = this.display.length;
 	this.running = false;
-	this.keys = new Array(16);
 	var memhex = [0xF0,0x90,0x90,0x90,0xF0, 0x20,0x60,0x20,0x20,0x70, 0xF0,0x10,0xF0,0x80,0xF0, 0xF0,0x10,0xF0,0x10,0xF0, 0x90,0x90,0xF0,0x10,0x10, 0xF0,0x80,0xF0,0x10,0xF0,
 	0xF0,0x80,0xF0,0x90,0xF0, 0xF0,0x10,0x20,0x40,0x40, 0xF0,0x90,0xF0,0x90,0xF0, 0xF0,0x90,0xF0,0x10,0xF0, 0xF0,0x90,0xF0,0x90,0x90, 0xE0,0x90,0xE0,0x90,0xE0, 0xF0,0x80,0x80,0x80,0xF0, 
 	0xE0,0x90,0x90,0x90,0xE0, 0xF0,0x80,0xF0,0x80,0xF0, 0xF0,0x80,0xF0,0x80,0x80]
@@ -134,63 +133,10 @@ Chip8.prototype.setKey = function(keyCode) {
 		key = 0xF;
 	};
 
-	this.keys[key] = 1; 
-	return this;
+	console.log(key);
+	this.running = true;
+	return key;
 }
-
-Chip8.prototype.unsetKey = function(keyCode) {
-	var key;
-	if(keyCode == 49){
-		key = 0x1;
-	};
-	if(keyCode == 50){
-		key = 0x2;
-	};
-	if(keyCode == 51){
-		key = 0x3;
-	};
-	if(keyCode == 52){
-		key = 0xC;
-	};
-	if(keyCode == 81){
-		key = 0x4;
-	};
-	if(keyCode == 87){
-		key = 0x5;
-	};
-	if(keyCode == 69){
-		key = 0x6;
-	};
-	if(keyCode == 82){
-		key = 0xD;
-	};
-	if(keyCode == 65){
-		key = 0x7;
-	};
-	if(keyCode == 83){
-		key = 0x8;
-	};
-	if(keyCode == 68){
-		key = 0x9;
-	};
-	if(keyCode == 70){
-		key = 0xE;
-	};
-	if(keyCode == 90){
-		key = 0xA;
-	};
-	if(keyCode == 88){
-		key = 0x0
-	};
-	if(keyCode == 67){
-		key = 0xB;
-	};
-	if(keyCode == 86){
-		key = 0xF;
-	};
-
-	this.keys[key] = 0;
-} 
 
 Chip8.prototype.stop = function() {
 	this.running = false;
@@ -308,7 +254,6 @@ Chip8.prototype.emulateCycle = function () {
 		//opode 00E0: 
 		//Clears the display
 		if(opend == 0x0){
-			console.log("cls")
 			for (var i = 0; i<64*32; i++){
 				this.display[i]=0;
 			}
@@ -317,7 +262,6 @@ Chip8.prototype.emulateCycle = function () {
 		//opcode 00EE:
 		//Returns form the subroutine setting the program counter to the top of the stack
 		if(opend == 0xE){
-			console.log("ret")
 			this.sp = this.sp-1;
 			this.pc = this.stack[this.sp]
 			return;
@@ -326,7 +270,6 @@ Chip8.prototype.emulateCycle = function () {
 	//opcode 1NNN:
 	//Jumps to location NNN by setting the program counter
 	if (opno == 0x1000){
-		console.log("jp to ");
 		this.pc = opconl3;
 		return;
 	}
@@ -359,8 +302,8 @@ Chip8.prototype.emulateCycle = function () {
 	if (opno == 0x5000){
 		if(this.v[x] == this.v[y]){
 			this.pc = this.pc + 2;
-			return;
 		}
+		return;
 	}
 	//opcode 6xNN
 	//set V[x] = NN
@@ -526,19 +469,13 @@ Chip8.prototype.emulateCycle = function () {
 
 		//opcode Fx0A need to be made after input codes
 		if(opconl2 == 0x000A){
-			this.stop;
-			var pressed = 0; 
-			var keysclone = Array.from(this.keys);
-			while(pressed == 0){
-				for (var i = 0; i < 16; i++){
-					if(keysclone[i] != this.keys[i]){
-						pressed = i;
-					}
-				}
-			}
-			this.v[x] = pressed;
-			this.run;
-			//need to be made after input codes are written
+			var pressed = -1;
+			this.running = false;
+			var self = this;
+			document.addEventListener("keydown",function(event){
+				pressed = self.setKey(event.keyCode);
+				self.v[x] = pressed;
+			});
 			return;
 		}
 		//opcode Fx15
