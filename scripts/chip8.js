@@ -16,7 +16,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     // The last register is the carry flag
 	this.v = new Uint8Array(arraybuffer); 
 	this.vLength = this.v.length;
-    this.stack = new Uint8Array(arraybuffer);// For insturctions
+    this.stack = new Array (16);// For insturctions
     this.i = null; //Register I. The sprite pointer.
     this.sp = null; //Stack Pointer
     this.pc = 0x200; //program counter starts at 0x200
