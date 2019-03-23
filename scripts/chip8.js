@@ -445,16 +445,21 @@ Chip8.prototype.emulateCycle = function () {
 	// opno == 0xE000 need to be made after input codes is written
 	if (opno == 0xE000) {
 		if(opend == 0x000E){
-			if(this.keys[this.v[x]] == 1){
-				this.pc = this.pc + 2;
-				return;
-			}
+			var self = this;
+			document.addEventListener("keydown",function(event){
+				if (self.setKey(event.keyCode) == self.v[x]) {
+					self.pc = self.pc + 2;
+				}
+			});
+			return;
 		}
 		if(opend == 0x0001){
-			if(this.keys[this.v[x]] != 1){
-				this.pc = this.pc + 2;
-				return;
-			} 
+			var self = this;
+			document.addEventListener("keydown",function(event){
+				if (self.setKey(event.keyCode) != self.v[x]) {
+					self.pc = self.pc + 2;
+				}
+			});
 
 		}
 	}
@@ -469,12 +474,10 @@ Chip8.prototype.emulateCycle = function () {
 
 		//opcode Fx0A need to be made after input codes
 		if(opconl2 == 0x000A){
-			var pressed = -1;
 			this.running = false;
 			var self = this;
 			document.addEventListener("keydown",function(event){
-				pressed = self.setKey(event.keyCode);
-				self.v[x] = pressed;
+				self.v[x] = self.setKey(event.keyCode);
 			});
 			return;
 		}
