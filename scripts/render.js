@@ -27,7 +27,7 @@ textObj.prototype.setMsg = function (msg) {
 
 textObj.prototype.clearText = function () {
     let temp = this.canvas.getContext("2d");
-    temp.clearRect(this.x,this.y,100,-13);
+    temp.clearRect(this.x,this.y,1000,-10);
 }
 
 function displayPixel(canvasObj, x,y) {

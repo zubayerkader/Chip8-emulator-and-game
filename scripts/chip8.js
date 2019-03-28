@@ -1,4 +1,3 @@
-
 function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 
     // Reserves 4096 bytes of memory.
@@ -16,7 +15,7 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
     // The last register is the carry flag
 	this.v = new Uint8Array(arraybuffer); 
 	this.vLength = this.v.length;
-    this.stack = new Array (16);// For insturctions
+    this.stack = new Array (16);// For instructions
     this.i = null; //Register I. The sprite pointer.
     this.sp = null; //Stack Pointer
     this.pc = 0x200; //program counter starts at 0x200
@@ -32,6 +31,8 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 		this.memory[i] = memhex[i];
 		
 	}
+
+	var instruction = " ";
 
     return this;
 }
@@ -59,27 +60,6 @@ Chip8.prototype.loadProgram = function() {
 	};
 
 	reader.readAsArrayBuffer(file);
-}
-
-Chip8.prototype.run = function() {
-	//TODO: Figure out how the delays work during runtime
-	if (this.running == false) { // prevent multiple instances of run
-		this.running = true;
-		var self = this;
-	
-		function running () {
-			for (let i = 0; i < 5; i++) { //run 5 lines of opcodes and let the rest of the code run too. We dont have threading.
-				if (self.running) {
-					self.emulateCycle();
-					update();
-				}
-			}
-		}
-
-		setInterval(running, 100);
-	}
-	
-	
 }
 
 Chip8.prototype.setKey = function(keyCode) {
@@ -138,10 +118,7 @@ Chip8.prototype.setKey = function(keyCode) {
 	return key;
 }
 
-Chip8.prototype.stop = function() {
-	this.running = false;
-	return this;
-}
+
 
 Chip8.prototype.setI = function(memLocation) { // set I
     this.i = memLocation;
@@ -224,16 +201,13 @@ Chip8.prototype.reset = function() {
 	} catch {
 	}
 
+	stack = [];
+
+	this.instruction = " ";
+
 	update();
 	return this
 	//tba
-}
-
-Chip8.prototype.step = function () {
-	if (!this.running) {
-		this.emulateCycle();
-		update();
-	}
 }
 
 Chip8.prototype.emulateCycle = function () {
@@ -271,6 +245,7 @@ Chip8.prototype.emulateCycle = function () {
 	//Jumps to location NNN by setting the program counter
 	if (opno == 0x1000){
 		this.pc = opconl3;
+		this.instruction = "JP " + opconl3;
 		return;
 	}
 	//opcode 2NNN:

@@ -1,6 +1,7 @@
 let chip8 = new Chip8();
 let regArr = new Array(16);
 let display = new Array(64*32);
+let stack = [];
 
 function clearDisplay() { // Does not clear the value of display array, just erase from canvas.
     for (let i = 0; i < display.length; i++) {
@@ -68,10 +69,83 @@ function update() {
     drawReg();
     updatePointers();
     drawPointers();
+
+    instructionrender.clearText();
+    instructionrender.setMsg("instruction = " + chip8.instruction);
+    instructionrender.printToCanvas();
     //keyPress();
     //keyLetgo();
 }
 
+function runningFunction() 
+{
+    for (let i = 0; i < 5; i++) //run 5 lines of opcodes and let the rest of the code run too. We dont have threading.
+    {
+        if (chip8.running) 
+        {
+            chip8.emulateCycle();
+
+            if (chip8.delaytimer > 0)
+                chip8.delaytimer--;
+
+            if (chip8.soundtimer > 0)
+                chip8.soundtimer--;
+
+            stack.push(_.cloneDeep(chip8));
+
+            update();
+        }
+    }
+}
+
+function playPause() 
+{
+    if (chip8.running == true) // if playing, pause it
+    {
+        chip8.running = false;
+        clearInterval(run);
+    }
+    else if (chip8.running == false) // if paused, play it
+    {
+        chip8.running = true;
+        var run = setInterval(runningFunction, 100);
+
+    }
+}
+
+function stepForward() 
+{
+    if (!chip8.running) 
+    {
+        chip8.emulateCycle();
+
+        if (chip8.delaytimer > 0)
+                chip8.delaytimer--;
+
+        if (chip8.soundtimer > 0)
+            chip8.soundtimer--;
+
+        stack.push(_.cloneDeep(chip8));
+        
+        update();
+
+        console.log('hello');
+    }
+}
+
+function stepBackward() 
+{
+    if (!chip8.running) 
+    {
+        if (stack.length > 0 )
+        {
+            //document.write('stack is filling')
+            chip8 = stack.pop();
+            chip8.running = false;
+            update();
+        }
+    }
+}
 
 let i = 0
 for (let r = 1; r <= 2; r++) {
@@ -86,6 +160,7 @@ for (let r = 1; r <= 2; r++) {
 let irender = new textObj(document.getElementById("Registers"), "I = " + chip8.i, 100, ((i-11)+1)*14); // TODO: Figure out how to make this cleaner.
 let sprender = new textObj(document.getElementById("Registers"), "SP = " + chip8.sp, 100, (((i+1)-11)+1)*14);
 let pcrender = new textObj(document.getElementById("Registers"), "PC = " + chip8.pc, 100, (((i+2)-11)+1)*14);
+let instructionrender = new textObj(document.getElementById("Registers"), "instruction = " + chip8.instruction, 100, (((i+3)-11)+1)*14);
 
 for (let r = 0; r < 32; r++) {
     for (let c = 0; c < 64; c++) {
