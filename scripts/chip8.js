@@ -66,50 +66,50 @@ Chip8.prototype.setKey = function(keyCode) {
 	var key;
 	if(keyCode == 49){
 		key = 0x1;
-	};
-	if(keyCode == 50){
+	}
+	else if(keyCode == 50){
 		key = 0x2;
-	};
-	if(keyCode == 51){
+	}
+	else if(keyCode == 51){
 		key = 0x3;
-	};
-	if(keyCode == 52){
+	}
+	else if(keyCode == 52){
 		key = 0xC;
-	};
-	if(keyCode == 81){
+	}
+	else if(keyCode == 81){
 		key = 0x4;
-	};
-	if(keyCode == 87){
+	}
+	else if(keyCode == 87){
 		key = 0x5;
-	};
-	if(keyCode == 69){
+	}
+	else if(keyCode == 69){
 		key = 0x6;
-	};
-	if(keyCode == 82){
+	}
+	else if(keyCode == 82){
 		key = 0xD;
-	};
-	if(keyCode == 65){
+	}
+	else if(keyCode == 65){
 		key = 0x7;
-	};
-	if(keyCode == 83){
+	}
+	else if(keyCode == 83){
 		key = 0x8;
-	};
-	if(keyCode == 68){
+	}
+	else if(keyCode == 68){
 		key = 0x9;
-	};
-	if(keyCode == 70){
+	}
+	else if(keyCode == 70){
 		key = 0xE;
-	};
-	if(keyCode == 90){
+	}
+	else if(keyCode == 90){
 		key = 0xA;
-	};
-	if(keyCode == 88){
+	}
+	else if(keyCode == 88){
 		key = 0x0
-	};
-	if(keyCode == 67){
+	}
+	else if(keyCode == 67){
 		key = 0xB;
-	};
-	if(keyCode == 86){
+	}
+	else if(keyCode == 86){
 		key = 0xF;
 	};
 
