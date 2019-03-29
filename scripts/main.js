@@ -73,13 +73,16 @@ function update() {
     instructionrender.clearText();
     instructionrender.setMsg("instruction = " + chip8.instruction);
     instructionrender.printToCanvas();
+
+    console.log(this.instruction);
+
     //keyPress();
     //keyLetgo();
 }
 
 function runningFunction() 
 {
-    for (let i = 0; i < 5; i++) //run 5 lines of opcodes and let the rest of the code run too. We dont have threading.
+    for (let i = 0; i < 8; i++) //run 8 lines of opcodes and let the rest of the code run too. We dont have threading.
     {
         if (chip8.running) 
         {
@@ -129,7 +132,7 @@ function stepForward()
         
         update();
 
-        console.log('hello');
+        //console.log('hello');
     }
 }
 

@@ -220,7 +220,7 @@ Chip8.prototype.emulateCycle = function () {
 	var opconl3 = opcode & 0x0FFF; 
 	this.pc = this.pc + 2;
 
-	console.log(opcode.toString(16));
+	//console.log(opcode.toString(16));
 	if(this.pc >= 4096){
 		return;
 	}
@@ -231,6 +231,7 @@ Chip8.prototype.emulateCycle = function () {
 			for (var i = 0; i<64*32; i++){
 				this.display[i]=0;
 			}
+			this.instruction = "CLS";
 			return;
 		}
 		//opcode 00EE:
@@ -238,6 +239,7 @@ Chip8.prototype.emulateCycle = function () {
 		if(opend == 0xE){
 			this.sp = this.sp-1;
 			this.pc = this.stack[this.sp]
+			this.instruction = "RET";
 			return;
 		}
 	}
@@ -254,6 +256,7 @@ Chip8.prototype.emulateCycle = function () {
 		this.stack[this.sp] = this.pc;
 		this.sp = this.sp+1;
 		this.pc = opconl3;
+		this.instruction = "CALL " + opconl3;
 		return;
 	}
 	//opcode 3xNN:
@@ -262,6 +265,7 @@ Chip8.prototype.emulateCycle = function () {
 		if(this.v[x] == opconl2){
 			this.pc = this.pc + 2;
 		}
+		this.instruction = "SE V" + x + ", " + opconl2;
 		return;
 	}
 	//opcode 4xNN:
@@ -270,6 +274,7 @@ Chip8.prototype.emulateCycle = function () {
 		if(this.v[x] != opconl2){
 			this.pc = this.pc + 2;
 		}
+		this.instruction = "SNE V" + x + ", " + opconl2;
 		return;
 	}
 	//opcode 5xy0
@@ -278,12 +283,14 @@ Chip8.prototype.emulateCycle = function () {
 		if(this.v[x] == this.v[y]){
 			this.pc = this.pc + 2;
 		}
+		this.instruction = "SE V" + x + ", V" + y;
 		return;
 	}
 	//opcode 6xNN
 	//set V[x] = NN
 	if (opno == 0x6000){
 		this.v[x] = opconl2;
+		this.instruction = "LD V" + x + ", " + opconl2;
 		return;
 	}
 	//opcode 7xNN
@@ -291,6 +298,7 @@ Chip8.prototype.emulateCycle = function () {
 	if (opno == 0x7000){
 		this.v[x] = this.v[x] + opconl2;
 		//might have conditions tied to it (such as if size exceeds emulator parameters)
+		this.instruction = "ADD V" + x + ", " + opconl2;
 		return;
 	}
 	if (opno == 0x8000){
@@ -298,24 +306,28 @@ Chip8.prototype.emulateCycle = function () {
 		//set V[x] = V[y]
 		if (opend == 0x0000) {
 			this.v[x] = this.v[y];
+			this.instruction = "LD V" + x + ", V" + y;
 			return;
 		}
 		//opcode 8xy1
 		//set V[x] = V[x] or V[y]
 		if (opend == 0x0001) {
 			this.v[x] = this.v[x] | this.v[y];
+			this.instruction = "OR V" + x + ", V" + y;
 			return;
 		}
 		//opcode 8xy2
 		//set V[x] = V[x] and V[y]
 		if (opend == 0x0002) {
 			this.v[x] = this.v[x] & this.v[y];
+			this.instruction = "AND V" + x + ", V" + y;
 			return;
 		}
 		//opcode 8xy3
 		//set V[x] = V[x] xor V[y]
 		if (opend == 0x0003) {
 			this.v[x] = this.v[x] ^ this.v[y];
+			this.instruction = "XOR V" + x + ", V" + y;
 			return;
 
 		}
@@ -327,6 +339,7 @@ Chip8.prototype.emulateCycle = function () {
 			if(this.v[x]>255){
 				this.v[0xF]= 1;
 			}
+			this.instruction = "ADD V" + x + ", V" + y;
 			return;
 
 		}
@@ -338,6 +351,7 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] - this.v[y];
+			this.instruction = "SUB V" + x + ", V" + y;
 			return;
 		}
 		//opcode 8xy6
@@ -347,6 +361,7 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] >> 1;
+			this.instruction = "SHR V" + x + "{, V" + y + "}";
 			return;
 		}
 		//opcode 8xy7 
@@ -357,6 +372,7 @@ Chip8.prototype.emulateCycle = function () {
 			if (this.v[y] > this.v[x]) {
 				this.v[0xF] = 0x1;
 			}
+			this.instruction = "SUBN V" + x + ", V" + y;
 			return; 
 		}
 		//opcode 8xyE
@@ -366,6 +382,7 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[0xF] = 0x1;
 			}
 			this.v[x] = this.v[x] << 1;
+			this.instruction = "SHL V" + x + "{, V" + y + "}";
 			return;
 		} 
 	}
@@ -375,24 +392,28 @@ Chip8.prototype.emulateCycle = function () {
 		if (this.v[x] != this.v[y]) {
 			this.pc = this.pc + 2;
 		}
+		this.instruction = "SNE V" + x + ", V" + y;
 		return;
 	}
 	//opcode ANNN
 	//set ip = NNN
 	if (opno == 0xA000) {
 		this.i = opconl3;
+		this.instruction = "LD I" + ", " + opconl3;
 		return;
 	}
 	//opcode BNNN
 	//set pc = V[0] + NNN
 	if (opno == 0xB000) {
 		this.pc = this.v[0x0] + opconl3;
+		this.instruction = "JP V0, " + opconl3;
 		return;
 	}
 	//opcode CxNN
 	//Set V[x] = random byte & NN
 	if (opno == 0xC000) {
 		this.v[x] = (Math.random()*0xFF) & opconl2;
+		this.instruction = "RND V" + x + ", " + opconl2;
 		return;
 	}
 	//opcode Dxyn
@@ -414,6 +435,7 @@ Chip8.prototype.emulateCycle = function () {
 				index = index << 1; // e.g. 1001 0101 = 0010 1010 & 1000 0000 fetches first MSB
 			}
 		}
+		this.instruction = "DRW V" + x + ", V" + y + ", " + opend;
 		return;
 	}
 
@@ -426,6 +448,7 @@ Chip8.prototype.emulateCycle = function () {
 					self.pc = self.pc + 2;
 				}
 			});
+			this.instruction = "SKP V" + x;
 			return;
 		}
 		if(opend == 0x0001){
@@ -435,7 +458,8 @@ Chip8.prototype.emulateCycle = function () {
 					self.pc = self.pc + 2;
 				}
 			});
-
+			this.instruction = "SKP V" + x;
+			return;
 		}
 	}
 
@@ -444,6 +468,7 @@ Chip8.prototype.emulateCycle = function () {
 		//set V[x] = Delay timer
 		if(opconl2 == 0x0007){
 			this.v[x] = this.delaytimer;
+			this.instruction = "LD V" + x + ", DT";
 			return;
 		}
 
@@ -454,24 +479,28 @@ Chip8.prototype.emulateCycle = function () {
 			document.addEventListener("keydown",function(event){
 				self.v[x] = self.setKey(event.keyCode);
 			});
+			this.instruction = "LD V" + x + ", K";
 			return;
 		}
 		//opcode Fx15
 		//set Delay timer = V[x]
 		if (opconl2 == 0x0015) {
 			this.delaytimer = this.v[x];
+			this.instruction = "LD DT, V" + x;
 			return;
 		}
 		//opcode Fx18
 		//Set Sound timer = V[x]
 		if (opconl2 == 0x0018) {
 			this.soundtimer = this.v[x];
+			this.instruction = "LD ST, V" + x;
 			return;
 		}
 		//opcode Fx1E
 		//Set I = I + V[x]
 		if (opconl2 == 0x001E) {
 			this.i = this.i + this.v[x];
+			this.instruction = "ADD I, V" + x;
 			return;
 		}
 		//opcode Fx29
@@ -479,6 +508,7 @@ Chip8.prototype.emulateCycle = function () {
 		if (opconl2 == 0x0029) {
 			this.i = this.v[x] * 5;
 			// need to be made after sprite is constructed
+			this.instruction = "LD F, V" + x;
 			return;
 		}
 		//opcode Fx33
@@ -494,6 +524,7 @@ Chip8.prototype.emulateCycle = function () {
 			this.memory[i] = hundred;
 			this.memory[i+1] = ten;
 			this.memory[i+2] = one;
+			this.instruction = "LD B, V" + x;
 			return;
 		}
 		//opcode Fx55
@@ -504,6 +535,7 @@ Chip8.prototype.emulateCycle = function () {
 				
 			}
 			this.i = this.i + x + 1;
+			this.instruction = "LD [I], V" + x;
 			return;
 		}
 		//opcode Fx65
@@ -513,9 +545,12 @@ Chip8.prototype.emulateCycle = function () {
 				this.v[i] = this.memory[this.i+i];
 			}
 			this.i = this.i + x + 1;	
+			this.instruction = "LD V" + x + ", [I]";
+			return;
 		}
 	}
 	
+	this.instruction = "opcode not recognized";
 	return;
 	//insert error code if opcode is not recognized
 	
