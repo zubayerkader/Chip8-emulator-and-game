@@ -218,9 +218,11 @@ Chip8.prototype.emulateCycle = function () {
 	var opend = opcode & 0x000F;
 	var opconl2 = opcode & 0x00FF;
 	var opconl3 = opcode & 0x0FFF; 
+	var whateveriis = this.i;
 	this.pc = this.pc + 2;
 
-	//console.log(opcode.toString(16));
+	console.log(opcode.toString(16));
+	//console.log(whateveriis);
 	if(this.pc >= 4096){
 		return;
 	}
@@ -544,7 +546,7 @@ Chip8.prototype.emulateCycle = function () {
 			for (var i = 0; i<=x; i++){
 				this.v[i] = this.memory[this.i+i];
 			}
-			this.i = this.i + x + 1;	
+			//this.i = this.i + x + 1;	FUCK THIS LINE OF CODE
 			this.instruction = "LD V" + x + ", [I]";
 			return;
 		}
