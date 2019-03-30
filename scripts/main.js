@@ -74,7 +74,7 @@ function update() {
     instructionrender.setMsg("instruction = " + chip8.instruction);
     instructionrender.printToCanvas();
 
-    console.log(this.instruction);
+    //console.log(this.instruction);
 
     //keyPress();
     //keyLetgo();
