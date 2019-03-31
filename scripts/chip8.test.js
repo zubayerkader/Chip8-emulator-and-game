@@ -13,7 +13,7 @@ test("Testing Initial Conditions", () => {
     expect(chip8.memory).toHaveLength(4096);
     expect(chip8.v).toBeInstanceOf(Uint8Array);
     expect(chip8.v).toHaveLength(16);
-    expect(chip8.stack).toBeInstanceOf(Uint8Array);
+    expect(chip8.stack).toBeInstanceOf(Array);
     expect(chip8.stack).toHaveLength(16);
     expect(chip8.display).toBeInstanceOf(Array);
     expect(chip8.display).toHaveLength(64 * 32);
@@ -60,11 +60,6 @@ test("Test setDelay function. Set delaytimer to 0", () => {
   test("Test setSound function. Set sound to 0", () => {
     const soundTest = Chip8.prototype.setSound();
     expect(soundTest.soundtimer).toEqual(0);
-  });
-  
-  test("Test Stop function. Set running to false", () => {
-    const stopTest = Chip8.prototype.stop();
-    expect(stopTest.running).toEqual(false);
   });
 
   /*

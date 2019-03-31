@@ -204,8 +204,10 @@ Chip8.prototype.reset = function() {
 	stack = [];
 
 	this.instruction = " ";
-
-	update();
+	try {
+		update();
+	} catch {
+	}
 	return this
 	//tba
 }
