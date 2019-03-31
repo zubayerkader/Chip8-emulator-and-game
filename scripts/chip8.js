@@ -113,7 +113,7 @@ Chip8.prototype.setKey = function(keyCode) {
 		key = 0xF;
 	};
 
-	console.log(key);
+	//console.log(key);
 	this.running = true;
 	return key;
 }
@@ -223,7 +223,7 @@ Chip8.prototype.emulateCycle = function () {
 	var whateveriis = this.i;
 	this.pc = this.pc + 2;
 
-	console.log(opcode.toString(16));
+	//console.log(opcode.toString(16));
 	//console.log(whateveriis);
 	if(this.pc >= 4096){
 		return;
