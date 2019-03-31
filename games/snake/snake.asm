@@ -24,16 +24,16 @@ UNDEF   HPHEAD
 start:
 	CLS
 
-;	LD I, xcoordinate 
-;	LD V0, #00
-;	LD V1, #00
-;	LD V2, #01
-;refreshdisplaymemory: 		; 
-;	LD [I], V0 				; ERASE 256B AFTER END OF PROGRAM TO REFRESH DISPLAY MEMORY
-;	ADD I, V2 				; 
-;	ADD V1, #01 			
-;	SE V1, #00 				
-;	JP refreshdisplaymemory
+	LD I, xcoordinate 
+	LD V0, #00
+	LD V1, #00
+	LD V2, #01
+refreshdisplaymemory: 		; 
+	LD [I], V0 				; ERASE 256B AFTER END OF PROGRAM TO REFRESH DISPLAY MEMORY
+	ADD I, V2 				; 
+	ADD V1, #01 			
+	SE V1, #00 				
+	JP refreshdisplaymemory
 
 
 ;drwhead:
