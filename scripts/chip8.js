@@ -32,6 +32,12 @@ function Chip8() { // Constructor, ex. var chip8 = new Chip8();
 		
 	}
 
+	//This variables is used for opcode F00A
+	var pause = false;
+	var keyreg = null;
+
+	var keypressed = null;
+
 	var instruction = " ";
 
     return this;
@@ -114,10 +120,17 @@ Chip8.prototype.setKey = function(keyCode) {
 	};
 
 	console.log(key);
-	this.running = true;
-	return key;
+	if (this.pause) {
+		this.running = true;
+		this.pause = false;
+		this.v[this.keyreg] = key;
+	}
+	this.keypressed = key;
 }
 
+Chip8.prototype.releaseKey = function(keyCode) {
+	this.keypressed = null;
+}
 
 
 Chip8.prototype.setI = function(memLocation) { // set I
@@ -444,23 +457,17 @@ Chip8.prototype.emulateCycle = function () {
 	// opno == 0xE000 need to be made after input codes is written
 	if (opno == 0xE000) {
 		if(opend == 0x000E){
-			var self = this;
-			document.addEventListener("keydown",function(event){
-				if (self.setKey(event.keyCode) == self.v[x]) {
-					self.pc = self.pc + 2;
-				}
-			});
+			if (this.v[x] == this.keypressed) {
+				this.pc += 2;
+			}
 			this.instruction = "SKP V" + x;
 			return;
 		}
 		if(opend == 0x0001){
-			var self = this;
-			document.addEventListener("keydown",function(event){
-				if (self.setKey(event.keyCode) != self.v[x]) {
-					self.pc = self.pc + 2;
-				}
-			});
-			this.instruction = "SKP V" + x;
+			if (this.v[x] != this.keypressed) {
+				this.pc += 2;
+			}
+			this.instruction = "SKNP V" + x;
 			return;
 		}
 	}
@@ -476,11 +483,9 @@ Chip8.prototype.emulateCycle = function () {
 
 		//opcode Fx0A need to be made after input codes
 		if(opconl2 == 0x000A){
+			this.pause = true;
 			this.running = false;
-			var self = this;
-			document.addEventListener("keydown",function(event){
-				self.v[x] = self.setKey(event.keyCode);
-			});
+			this.keyreg = x;
 			this.instruction = "LD V" + x + ", K";
 			return;
 		}

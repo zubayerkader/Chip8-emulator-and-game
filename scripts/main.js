@@ -172,4 +172,13 @@ for (let r = 0; r < 32; r++) {
     }
 }
 
+document.addEventListener("keydown", function(event){
+    chip8.setKey(event.keyCode);
+    
+});
+
+document.addEventListener("keyup", function(event){
+    chip8.releaseKey(event.keyCode);
+});
+
 update();
