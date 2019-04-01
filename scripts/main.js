@@ -82,7 +82,7 @@ function update() {
 
 function runningFunction() 
 {
-    for (let i = 0; i < 15; i++) //run 8 lines of opcodes and let the rest of the code run too. We dont have threading.
+    for (let i = 0; i < 10; i++) //run 8 lines of opcodes and let the rest of the code run too. We dont have threading.
     {
         if (chip8.running) 
         {
@@ -111,7 +111,7 @@ function playPause()
     else if (chip8.running == false) // if paused, play it
     {
         chip8.running = true;
-        var run = setInterval(runningFunction, 25);
+        var run = setInterval(runningFunction, 50);
 
     }
 }

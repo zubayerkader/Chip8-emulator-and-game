@@ -67,10 +67,10 @@ drwverticalline:
 	JP drwverticalline
 
 ;drwscore:
-	LD I, BCD
-	LD V5, #00
-	LD B, V5
-	CALL drwBCD
+;	LD I, BCD
+;	LD V5, #00
+;	LD B, V5
+;	CALL drwBCD
 
 	CALL drwball
 
@@ -177,9 +177,9 @@ collision:
 	LD V4, #02 		; 		MAKE SOUND
 	LD ST, V4 		; ELSE --> BOUNDARY HIT
 	ADD V5, #01 	; 		MAKE SOUND
-	LD I, BCD 		; 		DRW HEADTOTAIL
-	LD B, V5 		; 		DELAY
-	CALL drwBCD 	; 		START NEW GAME
+;	LD I, BCD 		; 		DRW HEADTOTAIL
+;	LD B, V5 		; 		DELAY
+;	CALL drwBCD 	; 		START NEW GAME
 	JP ptrmovement
 
 boundaryhit:
