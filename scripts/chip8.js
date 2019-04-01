@@ -217,8 +217,10 @@ Chip8.prototype.reset = function() {
 	stack = [];
 
 	this.instruction = " ";
-
-	update();
+	try {
+		update();
+	} catch {
+	}
 	return this
 	//tba
 }
@@ -234,7 +236,7 @@ Chip8.prototype.emulateCycle = function () {
 	var whateveriis = this.i;
 	this.pc = this.pc + 2;
 
-	console.log(opcode.toString(16));
+	//console.log(opcode.toString(16));
 	//console.log(whateveriis);
 	if(this.pc >= 4096){
 		return;
