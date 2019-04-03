@@ -362,6 +362,11 @@ Chip8.prototype.emulateCycle = function () {
 			if(this.v[x]>255){
 				this.v[0xF]= 1;
 			}
+			else if(this.v[x] <= 255)
+			{
+				this.v[0xF] = 0;
+			}
+			v[x] = (v[x] & 0x00FF);
 			this.instruction = "ADD V" + x + ", V" + y;
 			return;
 
@@ -383,7 +388,8 @@ Chip8.prototype.emulateCycle = function () {
 			if (this.v[x] & 0x1) {
 				this.v[0xF] = 0x1;
 			}
-			this.v[x] = this.v[x] >> 1;
+
+			this.v[x] = this.v[x] / 2;
 			this.instruction = "SHR V" + x + "{, V" + y + "}";
 			return;
 		}
@@ -395,6 +401,10 @@ Chip8.prototype.emulateCycle = function () {
 			if (this.v[y] > this.v[x]) {
 				this.v[0xF] = 0x1;
 			}
+			else if (V[y] <= V[x])
+    		{
+        		this.v[0xF] = 0x0;
+    		}
 			this.instruction = "SUBN V" + x + ", V" + y;
 			return; 
 		}
@@ -403,6 +413,9 @@ Chip8.prototype.emulateCycle = function () {
 		if (opend == 0x000E) {
 			if (this.v[x] & 0x8) {
 				this.v[0xF] = 0x1;
+			}
+			else{
+				this.v[0xF] = 0x0;
 			}
 			this.v[x] = this.v[x] << 1;
 			this.instruction = "SHL V" + x + "{, V" + y + "}";
@@ -546,10 +559,8 @@ Chip8.prototype.emulateCycle = function () {
 		// store registers V[0] through V[x] into memory from address ip
 		if (opconl2 == 0x0055) {
 			for (var i = 0; i<= x; i++){
-				this.memory[this.i + i] = this.v[i];
-				
+				this.memory[this.i + i] = this.v[i];	
 			}
-			this.i = this.i + x + 1;
 			this.instruction = "LD [I], V" + x;
 			return;
 		}
@@ -559,7 +570,6 @@ Chip8.prototype.emulateCycle = function () {
 			for (var i = 0; i<=x; i++){
 				this.v[i] = this.memory[this.i+i];
 			}
-			//this.i = this.i + x + 1;	FUCK THIS LINE OF CODE
 			this.instruction = "LD V" + x + ", [I]";
 			return;
 		}

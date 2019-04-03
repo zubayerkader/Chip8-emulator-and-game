@@ -1,4 +1,4 @@
-// opcode0x8XY4, opcode0x8XY5, opcode0x8XY6, opcode0x8XY7, opcode0x8XYE, FX29, FX33, FX55, FX65 clash with opcode definition in chip8.js
+
 const opcodes = {
    opcode0x00E0: (display, flag) => {
     for (let i = 0; i < display.length; ++i) {
@@ -90,9 +90,9 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
         V[0xF] = 0;
     }
     else if (V[x] > 255){
-        V[x] = (V[x] & 0x00FF);
         V[0xF] = 1;
     }
+    V[x] = (V[x] & 0x00FF);
     return V[x];
 },
 
@@ -101,28 +101,23 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     {
         V[x] -= V[y];
         V[0x0] = 1; 
-        return V[x];
     }
     else if (V[x] <= V[y])
     {
         V[x] -=  V[y];
         V[0xF] = 0;
-        return V[x];
     }
+    return V[x];
 },
 
    opcode0x8XY6: (x, V) => {
 
-    if (V[x] % 2 == 1){
-        V[0xF] = 1;
-        V[x] = V[x] / 2; 
-        return V[x];
+    if (V[x] & 0x1){
+        V[0xF] = 0x1;        
     }
-    else if (V[x] % 2 == 0){
-        V[0xF] = 0; 
-        V[x] = V[x] / 2; 
-        return V[x];
-    }
+
+    V[x] = V[x] / 2; 
+    return V[x];
 },
 
    opcode0x8XY7: (x, y, V) => { 
@@ -139,15 +134,14 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
 },
 
    opcode0x8XYE: (V, x, pc) => {
-    if ( (V[x] >> 7 & 0x0001) == 1){
-        V[15] = 1;                   
+    if ( V[x] >> 7 & 0x0001){
+        V[0xF] = 1;                   
     }
     else{
-        V[15] = 0;
+        V[0xF] = 0;
     }
     V[x] = V[x] << 1;
-    V[x] *= 2;
-    return V[15];
+    return V[0xF];
 },
 
    opcode0x9XY0: (V, x, y, pc) => {
@@ -206,7 +200,7 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     return soundtimer;
 },
    opcode0xFX29: (I, V, x) => {
-    I = V[x];
+    I = V[x] * 5;
     return I;
 }, 
    opcode0xFX33: (memory, I, V, x) => {
@@ -232,15 +226,13 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     for (let i = 0; i <= x ; i++){
         memory[I+i] = V[i];
     }
-    
     return memory;
 },
    opcode0xFX65: (memory, I, V, x) => {
     
     for (let i = 0; i <= x ; i++){
-        V[I+i] = memory[i];
+        V[i] = memory[i+I];
     }
-    
     return V;
 }  
 

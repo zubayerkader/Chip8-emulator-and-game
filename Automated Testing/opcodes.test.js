@@ -279,7 +279,7 @@ test('Test Opcode 00E0. Clears the screen', () => {
       registers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
       for (let n=0; n<0x100; n++){
         registers[x] = n;
-        expect(  opcodes.opcode0xFX29(0x100, registers, x)).toBe(n);
+        expect(  opcodes.opcode0xFX29(0x100, registers, x)).toBe(n*5);
       }
     }
   });
@@ -293,7 +293,7 @@ test('Test Opcode 00E0. Clears the screen', () => {
   });
   
   test('Test Opcode 0xFX65. Fills V0 to VX (including VX) with values from memory starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.',()=>{
-    expect(  opcodes.opcode0xFX65([5,10,15,20,25,30],3,[6,7,8,9,10,12,15,17],3)).toEqual([6,7,8,5,10,15,20,17])
+    expect( opcodes.opcode0xFX65([5,10,15,20,25,30,35],3,[6,7,8,9,10,12,15,17],3)).toEqual([20,25,30,35,10,12,15,17])
   });
   
  
