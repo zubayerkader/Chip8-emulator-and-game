@@ -313,8 +313,14 @@ Chip8.prototype.emulateCycle = function () {
 	//opcode 7xNN
 	//set V[x] = V[x] + NN
 	if (opno == 0x7000){
-		this.v[x] = this.v[x] + opconl2;
+		
+		let val = this.v[x] + opconl2;
+		
 		//might have conditions tied to it (such as if size exceeds emulator parameters)
+		if (val > 255) {
+			val -= 256;
+		}
+		this.v[x] = val;
 		this.instruction = "ADD V" + x + ", " + opconl2;
 		return;
 	}
