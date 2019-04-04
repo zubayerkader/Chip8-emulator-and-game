@@ -245,7 +245,7 @@ Chip8.prototype.emulateCycle = function () {
 		//opode 00E0: 
 		//Clears the display
 		if(opend == 0x0){
-			for (var i = 0; i<64*32; i++){
+			for (var i = 0; i< 64*32; i++){
 				this.display[i]=0;
 			}
 			this.instruction = "CLS";
@@ -558,7 +558,7 @@ Chip8.prototype.emulateCycle = function () {
 		//opcode Fx55
 		// store registers V[0] through V[x] into memory from address ip
 		if (opconl2 == 0x0055) {
-			for (var i = 0; i<= x; i++){
+			for (var i = 0; i <= x; i++){
 				this.memory[this.i + i] = this.v[i];	
 			}
 			this.instruction = "LD [I], V" + x;

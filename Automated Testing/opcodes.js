@@ -1,11 +1,12 @@
+// 8XY5, 8XYE, EXA1, FX33 conflict with chip8
+// FX0A, DXYN untested
 
 const opcodes = {
-   opcode0x00E0: (display, flag) => {
-    for (let i = 0; i < display.length; ++i) {
+   opcode0x00E0: (display) => {
+    for (let i = 0; i < display.length; i++) {
         display[i] = 0;
     }
-    flag = true;
-    return flag, display;
+    return display;
 },
 
    opcode0x00EE: (sp, pc, stack) => {
@@ -86,11 +87,11 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
 },
    opcode0x8XY4: (x, y, V) => {
     V[x] = V[x] + V[y]; 
-    if (V[x] <= 255){
-        V[0xF] = 0;
-    }
-    else if (V[x] > 255){
+    if (V[x] > 255){
         V[0xF] = 1;
+    }
+    else if (V[x] <= 255){
+        V[0xF] = 0;
     }
     V[x] = (V[x] & 0x00FF);
     return V[x];
@@ -161,11 +162,6 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     return pc;
 },
 
-   opcode0xCXNN: (x, opcode, V) => {
-
-    V[x] = (Math.random()*0xFF) & ( opcode & 0x00FF );
-    return V[x];
-},
    opcode0xEX9E: (opcode, pc, V, keypressed) =>{
     let num = V[(opcode & 0x0F00) >> 8];
     if (keypressed[num] === 1){
@@ -181,24 +177,26 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     return pc;
 },
 
-   opcode0xFX1E: (I, V, opcode) => {
-    I += V[((opcode & 0x0F00) >> 8)];
-    return I;
-},
+    opcode0xFX07: (opcode, V, delaytimer) => {
+        V[(opcode & 0x0F00) >> 8] = delaytimer;
+        return V[(opcode & 0x0F00) >> 8];
+    },
 
-   opcode0xFX07: (opcode, V, delaytimer) => {
-    V[(opcode & 0x0F00) >> 8] = delaytimer;
-    return V[(opcode & 0x0F00) >> 8];
-},
+    opcode0xFX15: (opcode, delaytimer, V) => {
+        delaytimer = V[(opcode & 0x0F00) >> 8];
+        return delaytimer;
+    },
 
-   opcode0xFX15: (opcode, delaytimer, V) => {
-    delaytimer = V[(opcode & 0x0F00) >> 8];
-    return delaytimer;
-},
-   opcode0xFX18: (opcode, soundtimer, V) => {
-    soundtimer = V[(opcode & 0x0F00) >> 8];
-    return soundtimer;
-},
+    opcode0xFX18: (opcode, soundtimer, V) => {
+        soundtimer = V[(opcode & 0x0F00) >> 8];
+        return soundtimer;
+    },
+
+    opcode0xFX1E: (I, V, opcode) => {
+        I = I + V[((opcode & 0x0F00) >> 8)];
+        return I;
+    },
+
    opcode0xFX29: (I, V, x) => {
     I = V[x] * 5;
     return I;
