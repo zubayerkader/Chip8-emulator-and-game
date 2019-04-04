@@ -1,5 +1,3 @@
-// 8XY5, 8XYE, EXA1, FX33 conflict with chip8
-// FX0A, DXYN untested
 
 const opcodes = {
    opcode0x00E0: (display) => {
@@ -202,16 +200,6 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     return I;
 }, 
    opcode0xFX33: (memory, I, V, x) => {
-    /*
-    var one = V[x];
-	var hundred = (one - (one % 100)) / 100;
-	one -= hundred * 100;
-	var ten = (one - (one % 10) / 10);
-	one -= ten * 10;
-	memory[I] = hundred;
-	memory[I+1] = ten;
-	memory[I+2] = one;
-    */
 
     memory[I] = V[x] / 100;
     memory[I + 1] = (V[x] / 10) % 10;

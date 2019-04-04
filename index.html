@@ -5,10 +5,17 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
         <link href="styles/style.css" rel="stylesheet" type="text/css">
         <title>CMPT 276</title>
+		<style>
+			body {  background-color: #A6A9C8;		}
+			
+		</style>
 
     </head>
-    <body>
+    <center><body>
         
+		<h1>TEAM 12</h1>
+		<h2>CHIP-8 EMULATOR</h2>
+		
         <form>
             <input type="file" id="file" name="file"> 
             <input type="button" onclick="chip8.loadProgram()" value="Load">
@@ -20,11 +27,7 @@
             </canvas>
         </div>
 
-        <canvas id="Memory" width="320" height="160">
-            Get a better browser that supports HTML5
-        </canvas>
-
-        <canvas id="Registers" width="320" height="160">
+        <canvas id="Registers" width="640" height="160">
             Get a better browser that supports HTML5
         </canvas>
 
@@ -41,5 +44,6 @@
         <script src = "scripts/chip8.js"></script>
         <script src = "scripts/render.js"></script>
         <script src = "scripts/main.js"></script>
-    </body>
+		
+    </body></center>
 </html>
