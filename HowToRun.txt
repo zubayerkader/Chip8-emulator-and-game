@@ -1,12 +1,10 @@
 Open index.html with chrome or firefox
 
-If you are using firefox or any other browser.
-You'll have to figure out how to open the web console.
+If you are using Firefox.
+Ctrl + Shift + J
 
 If you are using chrome:
-
 Press f12 and click the "console" tab
-
 
 Once in the console:
 
