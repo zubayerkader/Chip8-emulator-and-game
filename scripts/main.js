@@ -74,6 +74,9 @@ function update() {
     instructionrender.setMsg("instruction = " + chip8.instruction);
     instructionrender.printToCanvas();
 
+    //removeGarbage.clearText();
+    //removeGarbage.printToCanvas();
+
     console.log(chip8.instruction);
 
     //keyPress();
@@ -111,7 +114,7 @@ function playPause()
     else if (chip8.running == false) // if paused, play it
     {
         chip8.running = true;
-        var run = setInterval(runningFunction, 50);
+        var run = setInterval(runningFunction, 150); //setInterval: 150, loop: 10 -->fastest so far
 
     }
 }
@@ -164,6 +167,7 @@ let irender = new textObj(document.getElementById("Registers"), "I = " + chip8.i
 let sprender = new textObj(document.getElementById("Registers"), "SP = " + chip8.sp, 100, (((i+1)-11)+1)*14);
 let pcrender = new textObj(document.getElementById("Registers"), "PC = " + chip8.pc, 100, (((i+2)-11)+1)*14);
 let instructionrender = new textObj(document.getElementById("Registers"), "instruction = " + chip8.instruction, 100, (((i+3)-11)+1)*14);
+//let removeGarbage = new textObj(document.getElementById("Registers"), "                                                     ", 100, (((i+4)-11)+1)*14);
 
 for (let r = 0; r < 32; r++) {
     for (let c = 0; c < 64; c++) {
