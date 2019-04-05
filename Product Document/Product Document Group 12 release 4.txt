@@ -1,0 +1,121 @@
+# **Product Document Group 12 Release 4**
+---
+ ***Denotes Changes**
+### **Introduction**
+**What the project is about:**
+   * Implementing a Chip 8 emulator in JavaScript,
+   * A couple of Chip 8 games, 
+   * Use automated testing to debug the emulator,
+   * Implement some useful programs using chip8,
+   * Implement a visualizer to visualize our chip8 code line by line.
+
+### **Project Organization**
+---
+##### &nbsp;&nbsp;&nbsp;&nbsp;Meeting schedule
+   * &nbsp;&nbsp;Mon 10:30am - 11:30am
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;Communication tools/techniques our team plans to use
+   * &nbsp;&nbsp;Discord
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;Software repository your team plans to use
+   * &nbsp;&nbsp;GitHub
+
+
+### **Risk Analysis**
+---
+   *  **People leaving the group**
+       * Solved by splitting the work evenly among group members so if absences occur there is still someone working on all the modules.
+
+   * **Inexperience with Javascript and Chip 8 system**
+       * Learning as we program and debugging as we go so we can get work done despite our inexperience
+
+### **Work Breakdown**
+---
+***Revised**
+###### (For Release 5)
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Harry Ceong
+   *   &nbsp;&nbsp; Assembler HTML Page for ease of use
+#####  &nbsp;&nbsp;&nbsp;&nbsp;George Yang
+   *   &nbsp;&nbsp; Revamp Render.js
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Kazi zubayer quader Dhrubo
+   *   &nbsp;&nbsp; Display memory on Canvas
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Vinay Lohana
+   *   &nbsp;&nbsp; Create Sprite Editor as another tool
+#####  &nbsp;&nbsp;&nbsp;&nbsp; Shanila Javed
+   *   &nbsp;&nbsp; Improve Graphical User Interface for the emulator
+
+### **Hardware and software requirements**
+---
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Hardware
+   *   &nbsp;&nbsp; Laptops or Computer.
+
+#####  &nbsp;&nbsp;&nbsp;&nbsp;Software
+   *   &nbsp;&nbsp; Text Editor.
+
+### **Details of the software methodology**
+---
+#### Testing and Quality assurance tools and methods
+   * Jest
+
+#### Main implementation language our team plans to use
+   * JavaScript
+#### Software Methodology used 
+   * Incremental development
+
+### **Detailed use cases for all major features planned for the next release (Release 4)**
+---
+   * ~~The first game can be run on a separate chip8 emulator for users to run~~ (Done)
+   * ~~Programmers can change chip8 variables through the browser console~~ (Done)
+   * ~~Programmers will be able to use the testing tool to find errors within the program~~ (Done) 
+   * ~~Users can load chip8 files into the chip8 memory.~~ (Done)
+   * ~~The first game is functional.~~ (Done)
+   * ~~Assembler for Chip8 program.~~ (Done)
+   * ~~Users can interact with Chip8 keyboard.~~ (Done)
+   * ~~Users can see memory values through the console.~~ (Done)
+   * ~~Users can go backwards in the program.~~ (Done)
+   * ~~The Second Game is functional~~ (Done)
+   * ~~Completed Automated Testing~~
+
+### **Revised Detailed work schedule for release**
+--- 
+   * ~~Jan 13th Github Repository~~ 
+   * ~~**Jan 18th Release 0**~~
+   * ~~Feb 1st Buggy Emulator & First Game & Testing Tool by Harry, Kazi, Vinay, Shanila~~
+   * ~~Skeleton of Chip8 (Finished the operation codes and the renderer) by Harry and George~~
+   * ~~Buggy testing tool operational~~
+   * ~~Buggy version of First game done~~
+   * ~~**Feb 6th Release 1** by George~~ 
+   * ~~Feb 16th Emulator(Completely Finished) by George and Harry~~
+   * ~~First game Debugged Kazi zubayer quader Dhrubo~~
+   * ~~Feb 23th Emulator tested by Vinay and Shanila~~
+   * ~~**Feb 27th Release 2** by Harry~~
+   * ~~Assember as a useful tool completed~~
+   * ~~Researched for Second Game~~
+   * ~~Researched for Visualizer~~
+   * ~~**Mar 13th Release 3**~~
+   * ~~Second Game completed~~
+   * ~~Visualizer completed~~
+   * ~~Mar 15th Complete test starts~~
+   * ~~Apr 5th Complete test end~~
+   * ~~**Apr 8th Release 4**~~ 
+
+ ### **Monitoring and reporting mechanisms**
+---
+   * Reporting during weekly meetings  
+   * Checking in regularly on Discord 
+---
+### **Product Document Release 4, April 5, 2019 Changes Summary**
+**New**
+ #### Finished for Release 4
+   * **Revised** Automated testing
+   * Visualizer
+   *  **Revised** Second game is completed 
+#### Features planned for next release:
+   *  Revamp Render.js
+   *  Create an Sprite Editor as another tool
+   *  Assembler pge for ease of use
+   *  Better Graphical User Interface
+#### Product release:
+   *  Usable version of the software in Cmpt276release1.zip. Please see HowToRun.txt for instructions.
+   *  Automated testing for the release is also included. Please see HowToTest.txt.
+
