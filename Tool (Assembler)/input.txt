@@ -1,0 +1,14 @@
+
+	LD VA, 0x06
+	LD VB, 0x0F
+	ADD VA, VB
+
+
+	LD V2, 0x01 		
+	LD V3, 0x1E		
+	LD V4, 0x01		
+
+	ADD V4, 0x04
+	SE V4, V2
+
+	XOR V2, V3
