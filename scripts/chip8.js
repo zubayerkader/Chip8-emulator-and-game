@@ -51,23 +51,25 @@ catch(err)
 
 }
 
-Chip8.prototype.loadProgram = function() {
+Chip8.prototype.loadProgram = function() { // Loads the raw binary file into the memory array
 	var programpath = document.getElementById("file").files;
 
 	var file = programpath[0];
 	var reader = new FileReader();
 
-	reader.onload = function (e) {
+	reader.onload = function (e) { //onload is fired when load event is fired
 		let data = new Uint8Array(this.result);
 		for (let i = 0; i < data.length; i++) {
 			chip8.memory[0x200 + i] = data[i];
 		}
 	};
 
-	reader.readAsArrayBuffer(file);
+	reader.readAsArrayBuffer(file); // fire load event which trigger reader.onload
 }
 
 Chip8.prototype.setKey = function(keyCode) {
+	// Link to listener in main.js
+	// Turns keycode to respective key number for emulator
 	var key;
 	if(keyCode == 49){
 		key = 0x1;
