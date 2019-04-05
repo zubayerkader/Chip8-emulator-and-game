@@ -18,5 +18,8 @@
   "homepage": "https://github.com/vinaylohana/Team12#readme",
   "dependencies": {
     "chip8js": "^0.1.6"
+  },
+  "devDependencies": {
+    "jest": "^24.7.1"
   }
 }

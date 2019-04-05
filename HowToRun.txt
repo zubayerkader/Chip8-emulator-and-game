@@ -1,16 +1,12 @@
-Open index.html with chrome or firefox
+Open index.html with chrome or firefox or safari
 
-If you are using Firefox.
-Ctrl + Shift + J
+To play a game:
+1. click browse button and open snake (takes v1 to go till 256 to start so please wait) or floppy bird, that our team made, which can be found inside games folder of our repository; or browse any other game that you find on the internet.
+2. click reset button then click play/pause button to start the game.
+3. play using the keys {w,a,s,d} for movement and others keys also work that you need to figure out in order to play different games.
 
-If you are using chrome:
-Press f12 and click the "console" tab
-
-Once in the console:
-
-input "chip8.display[0] = 1" to turn on the top left corner of the display.
-input "chip8.memory[0x200] = <2 hexadecimals>" to input partial opcodes into memory.
-input "chip8.v[0] = 1" or "chip8.setV(0,1)" to change V[0] to 1.
-input "chip8.pc = 0x200" to change PC to 0x200.
-
-Please see chip8 methods and attributes for more interactions.
+To use visualizer:
+1. Open your browser’s console log to view memory while a game runs incase you are developing a chip8 game and you need to see memory for debugging purposes. If you are using Firefox press Ctrl + Shift + J to open console. If you are using chrome press f12 and click the "console" tab. If you are using safari press cmd + alt + c to open console.
+2. While a game is running you can use the play/pause button to play to pause the game.
+3. While a game is paused you can use step forward or step backward button. 
+4. All register at current instruction along with the current instruction is displayed on the 2nd canvas. Previous instructions are displayed on the browser’s console which can help you debug a game.

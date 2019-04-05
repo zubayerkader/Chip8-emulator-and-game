@@ -1,4 +1,4 @@
 Install Node.js from https://nodejs.org/en/download/
 Open Terminal and install Jest using "npm install --save-dev jest"
-Change directory to your repository
+Change directory to Team12 repository
 Input "npm test" into the terminal
