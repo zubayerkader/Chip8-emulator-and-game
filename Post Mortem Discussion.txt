@@ -1,0 +1,17 @@
+### Project Post Mortem
+---
+- #### What worked well in this project, and what didn’t?
+  - ##### *Initially we faced a lot of bugs in opcodes and games mostly but automated testing proved to be really useful and helped  a lot in fixing the bugs. Automated testing proved to work well. Our HTML file wasn't too complicated, and it worked well as well. What didn't work well was our Javascript files, and our games. Due to our inexperience we had difficulties that amateur would make. Setting us back a whole lot.*
+
+- #### What would you have done differently knowing what you know now?
+  - ##### *We would help each other solve problems on each other’s assigned tasks. We would learn and code together in the computer lab rather than on our own time wich would allows us to learn new concepts and new programming languages in more depth.*
+ 
+- #### What was the biggest unexpected challenge?
+   - ##### *When creating our games for our emulator, we had to look at other chip8 games to understand how they developed their games first before we could start on ours.*
+
+- #### Was all the testing worth it?
+   - ##### *Yes, it was very much worth it. If we didn't test our project, it would've been a disaster to work with at the end.*
+
+- #### What advice would you give to the next students who take 276?
+   - ##### *Start early and learn the languages required. Understand similar projects from the internet. Before starting research and understand what the project asks for learn all new programming languages when you have the time. Learn about github on your own so that you can collaborate with your team. Having weekly meeting and make sure to communicate with you team even if you could complete your task. Do every part of the project by dividing each part equally among teammates.*
+---
