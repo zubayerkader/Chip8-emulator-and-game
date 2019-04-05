@@ -4,46 +4,83 @@
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
         <link href="styles/style.css" rel="stylesheet" type="text/css">
-        <title>CMPT 276</title>
-		<style>
-			body {  background-color: #A6A9C8;		}
-			
-		</style>
+        <title>CMPT 276 - Team 12 - Chip8</title>
+		<style>	body { background-color: #A6A9C8; } </style>
 
     </head>
-    <center><body>
+    <center>
+        <body>
         
-		<h1>TEAM 12</h1>
-		<h2>CHIP-8 EMULATOR</h2>
-		
-        <form>
-            <input type="file" id="file" name="file"> 
-            <input type="button" onclick="chip8.loadProgram()" value="Load">
-        </form>
+    		<h1>TEAM 12</h1>
+    		<h2>CHIP-8 EMULATOR</h2>
+    		
+            <form>
+                <input type="file" id="file" name="file"> 
+                <input type="button" onclick="chip8.loadProgram()" value="Load">
+            </form>
 
-        <div id="Chip8Display">
-            <canvas id="display" width="640" height="320">
+            <div id="Chip8Display">
+                <canvas id="display" width="640" height="320">
+                    Get a better browser that supports HTML5
+                </canvas>
+            </div>
+
+            <canvas id="Registers" width="640" height="160">
                 Get a better browser that supports HTML5
             </canvas>
-        </div>
 
-        <canvas id="Registers" width="640" height="160">
-            Get a better browser that supports HTML5
-        </canvas>
-
-        <br>
+            <br>
 
 
-        <input type="button" onclick="chip8.reset()" value="Reset">
-        <input type="button" onclick="stepBackward()" value="Step Backward">
-        <input type="button" onclick="stepForward()" value="Step Forward">
-        <!-- <input type="button" onclick="chip8.run()" value="Run"> -->
-        <input type="button" onclick="playPause()" value="Play/Pause">
-        
-        <script src= "scripts/lodash.js"></script>
-        <script src = "scripts/chip8.js"></script>
-        <script src = "scripts/render.js"></script>
-        <script src = "scripts/main.js"></script>
+            <input type="button" onclick="chip8.reset()" value="Reset">
+            <input type="button" onclick="stepBackward()" value="Step Backward">
+            <input type="button" onclick="stepForward()" value="Step Forward">
+            <!-- <input type="button" onclick="chip8.run()" value="Run"> -->
+            <input type="button" onclick="playPause()" value="Play/Pause">
+
+            <h2>INSTRUCTIONS</h2>
+
+            <h3>To play a game:</h3>
+
+            <ol type="1">
+                <li> 
+                    Click browse button and open snake (takes v1 to go till 256 to start so please wait) or floppy bird, that our team made, which can be found inside games folder of our repository; or browse any other game that you find on the internet. 
+                </li>
+                <li> 
+                    Click reset button then click play/pause button to start the game. 
+                </li>
+                <li> 
+                    Play using the keys {w,a,s,d} for movement and others keys also work that you need to figure out in order to play different games.
+                </li>
+            </ol>
+
+            <h3>To use visualizer:</h3>
+
+            <ol type="1">
+                <li> 
+                    Open your browser’s console log to view memory while a game runs incase you are developing a chip8 game and you need to see memory for debugging purposes. 
+                    <ul>
+                        <li>Firefox: press Ctrl + Shift + J to open console.</li>
+                        <li>Chrome: press f12 and click the "console" tab. </li>
+                        <li>Safari: press cmd + alt + c to open console.</li>
+                    </ul>
+                </li>
+                <li> 
+                    While a game is running you can use the play/pause button to play to pause the game. 
+                </li>
+                <li> 
+                    While a game is paused you can use step forward or step backward button.
+                </li>
+                <li> 
+                    All register at current instruction along with the current instruction is displayed on the 2nd canvas. Previous instructions are displayed on the browser’s console which can help you debug a game.
+                </li>
+            </ol>
+            
+            <script src= "scripts/lodash.js"></script>
+            <script src = "scripts/chip8.js"></script>
+            <script src = "scripts/render.js"></script>
+            <script src = "scripts/main.js"></script>
 		
-    </body></center>
+        </body>
+    </center>
 </html>

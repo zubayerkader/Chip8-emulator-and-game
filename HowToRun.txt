@@ -1,9 +1,9 @@
 Open index.html with chrome or firefox or safari
 
 To play a game:
-1. click browse button and open snake (takes v1 to go till 256 to start so please wait) or floppy bird, that our team made, which can be found inside games folder of our repository; or browse any other game that you find on the internet.
-2. click reset button then click play/pause button to start the game.
-3. play using the keys {w,a,s,d} for movement and others keys also work that you need to figure out in order to play different games.
+1. Click browse button and open snake (takes v1 to go till 256 to start so please wait) or floppy bird, that our team made, which can be found inside games folder of our repository; or browse any other game that you find on the internet.
+2. Click reset button then click play/pause button to start the game.
+3. Play using the keys {w,a,s,d} for movement and others keys also work that you need to figure out in order to play different games.
 
 To use visualizer:
 1. Open your browser’s console log to view memory while a game runs incase you are developing a chip8 game and you need to see memory for debugging purposes. If you are using Firefox press Ctrl + Shift + J to open console. If you are using chrome press f12 and click the "console" tab. If you are using safari press cmd + alt + c to open console.
