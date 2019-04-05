@@ -10,11 +10,14 @@ Requires python3.6 or higher.
 In cmd or terminal, make sure you are in the same directory as assembler.py and the file you would like to assemble.
 In cmd or terminal, type python assembler.py your_file.txt
 
-In the same directory, the assembler.py 
+In the same directory, the assembler.py generate a raw binary file.
 
 DEBUG COMMON ISSUES:
 python is not recongized, make sure python.exe is in the enviromental path. Google how to do that.
 ':' SyntaxError: invalid syntax, make sure you are running python 3.6 or higher.
+
+Make sure there are no empty lines in the txt file, as the assembler reads it as an instruction.
+
 
 ONLY ONE INSTRUCTION PER LINE!
 E.g.
@@ -27,8 +30,8 @@ If you need more detail on indivdual instructions, go to cowgod's technical refe
 0xNNN, a 12 bit value represented in hexadecimal
 0xNN, a 8 bit value represented in hexadecimal
 0xN, a 4 bit value represented in hexadecimal
-x, a 4 bit value; a hexadecimal(decimal: 0 - 16)
-y, a 4 bit value; a hexdecimal(decimal: 0 - 16)
+x, a integer between 0 - 15
+y, a integer between 0 - 15
 
 Instruction list:
 CLS:

@@ -20,7 +20,7 @@ if __name__ == '__main__':
             output = ""
             for linenum,line in enumerate(fin,1):
                 try:
-                    instruction = line.upper().rstrip().replace(',', '').split(" ")
+                    instruction = line.upper().strip().replace(',', '').split(" ")
 
                     op=0
                     for word in instruction:
