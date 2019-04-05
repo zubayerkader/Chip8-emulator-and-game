@@ -114,7 +114,7 @@ function playPause()
     else if (chip8.running == false) // if paused, play it
     {
         chip8.running = true;
-        var run = setInterval(runningFunction, 150); //setInterval: 150, loop: 10 -->fastest so far
+        var run = setInterval(runningFunction, 60); //setInterval: 150, loop: 10 -->fastest so far
 
     }
 }
