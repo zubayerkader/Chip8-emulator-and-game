@@ -367,7 +367,7 @@ Chip8.prototype.emulateCycle = function () {
 			{
 				this.v[0xF] = 0;
 			}
-			v[x] = (v[x] & 0x00FF);
+		
 			this.instruction = "ADD V" + x + ", V" + y;
 			return;
 
