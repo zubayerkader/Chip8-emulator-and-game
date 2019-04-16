@@ -91,7 +91,7 @@ opcode0x2NNN: (stack, sp, pc, opcode) => {
     else if (V[x] <= 255){
         V[0xF] = 0;
     }
-    V[x] = (V[x] & 0x00FF);
+
     return V[x];
 },
 
